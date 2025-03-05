@@ -59,6 +59,7 @@ import { Inter, IBM_Plex_Mono, Recursive } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -102,13 +103,13 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {/* Main content takes up remaining space */}
             <main className="flex-grow">{children}</main>
             {/* Footer - always sticks to the bottom */}
             <footer className="bg-gray-900 text-white py-4 text-center">
               © {new Date().getFullYear()} AI Chat PDF. All rights reserved.
             </footer>{" "}
           </ThemeProvider>
+          <Toaster position="bottom-right" />
         </body>
       </html>
     </ClerkProvider>
