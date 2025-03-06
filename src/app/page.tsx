@@ -275,7 +275,6 @@ import {
 import Image from "next/image";
 import { useAuth } from "@clerk/nextjs";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import Link from "next/link";
 
 const features = [
   {
