@@ -7,7 +7,7 @@ import { ThemeToggle } from "./ThemeToggle";
 const Header = () => {
   return (
     <div className="flex justify-between bg-white dark:bg-gray-900 shadow-sm dark:shadow-md p-5 border-b dark:border-gray-700">
-      <Link href="/dashboard" className="text-2xl font-semibold text-gray-900 dark:text-white">
+      <Link href="/" className="text-2xl font-semibold text-gray-900 dark:text-white">
         Chat to <span className="text-indigo-600 dark:text-indigo-400">PDF</span>
       </Link>
 
@@ -27,10 +27,8 @@ const Header = () => {
             </Link>
           </Button>
 
-          {/* User Button */}
           <UserButton />
 
-          {/* Theme Toggle - Styled for dark mode */}
           <ThemeToggle />
         </div>
       </SignedIn>
