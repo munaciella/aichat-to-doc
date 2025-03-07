@@ -61,8 +61,11 @@ const FileUploader = () => {
       onDrop,
       maxFiles: 1,
       accept: {
-        "application/pdf": [".pdf"],
-      },
+        "*": [], 
+      }, // ✅ Accepts all file types
+      // accept: {
+      //   "application/pdf": [".pdf"],
+      // },
     });
 
   //const uploadInProgress = progress !== null && progress >= 0 && progress <= 100;
