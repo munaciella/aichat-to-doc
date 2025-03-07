@@ -1,9 +1,3 @@
-// const DashboardPage = () => {
-//   return <div>Hello</div>;
-// };
-
-// export default DashboardPage;
-
 export const dynamic = "force-dynamic";
 
 import DashboardClient from "@/components/DashboardClient";
@@ -13,7 +7,7 @@ const DashboardPage = () => {
 
   return (
     <div className="h-full max-w-7xl mx-auto">
-      <h1 className="text-3xl p-5 bg-gray-100 font-extralight text-indigo-600">My Documents</h1>
+      <h1 className="text-3xl p-5 bg-gray-100 dark:bg-background font-extralight text-indigo-600 dark:text-indigo-400">My Documents</h1>
 
         <DashboardClient />
         <Documents />

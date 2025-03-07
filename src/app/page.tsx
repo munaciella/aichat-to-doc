@@ -337,7 +337,7 @@ export default function Home() {
       {/* ✅ Theme Toggle - Moved to top-right */}
 
       <div className="bg-white dark:bg-gray-900 py-24 sm:py-32 rounded-md drop-shadow-xl">
-      <div className="absolute flex flex-col items-end top-1 right-1 outline-none">
+      <div className="absolute flex flex-col items-end top-2 right-2 lg:top-1 lg:right-1 md:top-2 md:right-2 outline-none">
         <ThemeToggle />
       </div>
         <div className="flex flex-col justify-center items-center mx-auto max-w-7xl px-6 lg:px-8">
