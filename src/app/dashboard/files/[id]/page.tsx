@@ -1,11 +1,7 @@
-const ChatToFilePage = ({
-  params: { id },
+export default async function ChatToFilePage({
+  params,
 }: {
-  params: {
-    id: string;
-  };
-}) => {
-  return <div>ChatToFilePage: {id}</div>;
-};
-
-export default ChatToFilePage;
+  params: { id: string };
+}) {
+  return <div>ChatToFilePage: {params.id}</div>;
+}
