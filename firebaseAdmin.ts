@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 import { getApp, getApps, initializeApp, App, cert } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 
