@@ -368,7 +368,7 @@ export default function Home() {
           </div>
 
           {/* ✅ Updated Button with Toast */}
-          <Button onClick={handleClick} className="mt-10 lg:p-6">
+          <Button onClick={handleClick} className="mt-10 lg:p-6 cursor-pointer">
             Get Started
           </Button>
         </div>

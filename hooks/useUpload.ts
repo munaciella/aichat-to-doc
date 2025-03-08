@@ -156,7 +156,7 @@ const useUpload = () => {
       if (currentProgress >= end) {
         clearInterval(interval);
       }
-    }, 100); // 🔥 Slow down progress update every 400ms
+    }, 100); // Slow down progress update every 400ms
   };
 
   const handleUpload = async (file: File) => {
@@ -169,7 +169,7 @@ const useUpload = () => {
     setProgress(0);
     setStatus(StatusText.UPLOADING);
 
-    let hasSimulated = false; // 🔥 Ensure progress simulation runs only once
+    let hasSimulated = false; // Ensure progress simulation runs only once
 
 
     uploadTask.on(
@@ -179,10 +179,10 @@ const useUpload = () => {
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
 
-    // ✅ Only simulate progress if Firebase is skipping updates
+    // Only simulate progress if Firebase is skipping updates
     if (!hasSimulated && percent === 0) {
       simulateSmoothProgress(0, 100);
-      hasSimulated = true; // 🔥 Prevent multiple runs
+      hasSimulated = true;
     } else {
       setProgress(percent);
     }

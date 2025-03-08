@@ -1,22 +1,27 @@
 {
   "compilerOptions": {
-    "strict": false,            // ✅ Turns off all strict TypeScript checks
-    "noImplicitAny": false,     // ✅ Allows any type without errors
-    "skipLibCheck": true,       // ✅ Prevents type checking of node_modules
-    "noEmitOnError": false,     // ✅ Allows build even with TypeScript errors
-    "ignoreDeprecations": "5.0", // ✅ Ignores Next.js/TypeScript deprecation warnings
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "strict": true, // ✅ Re-enable strict mode for better type checking
+    "noImplicitAny": true, // ✅ Forces explicit types (avoids silent bugs)
+    "noEmitOnError": true, // ✅ Prevents emitting JS files if TypeScript errors exist
+    "ignoreDeprecations": "5.0", // ✅ Ignores old TypeScript deprecations
+    "target": "ES2020",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
-    //"skipLibCheck": true,
-    //"strict": true,
-    "noEmit": true,
+    "skipLibCheck": true, // ✅ Avoids conflicts in node_modules
+    "noUncheckedIndexedAccess": true, // ✅ Improves array/obj safety
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "types": ["react", "react-dom"],
+    "types": [
+      "react",
+      "react-dom"
+    ],
     "jsx": "preserve",
     "incremental": true,
     "plugins": [
@@ -25,9 +30,20 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "noEmit": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "tailwind.config.js"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "tailwind.config.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

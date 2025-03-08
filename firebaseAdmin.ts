@@ -1,14 +1,12 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
-import { getApp, getApps, initializeApp, App, cert } from "firebase-admin/app";
+import { getApp, getApps, initializeApp, App, cert, ServiceAccount } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 
 import serviceKey from "./service_key.json";
-import { ServiceAccount } from "firebase-admin";
+//import { ServiceAccount } from "firebase-admin";
 
 let app: App;
 
-if (getApps().length === 0) {
+if (!getApps().length) {
     app = initializeApp({
     credential: cert(serviceKey as ServiceAccount),
   });

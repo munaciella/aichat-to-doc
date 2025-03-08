@@ -91,7 +91,7 @@ const FileUploader = () => {
   const showStatus = status !== StatusText.UPLOADING && status !== null;
 
   return (
-    <div className="flex flex-col gap-4 items-center max-w-7xl mx-auto">
+    <div className="flex flex-col gap-4 items-center max-w-7xl mx-auto cursor-pointer">
       {isUploading && (
         <div className="mt-32 flex flex-col justify-center items-center gap-5">
           {/* <div
@@ -140,7 +140,7 @@ const FileUploader = () => {
 
           {progress !== null && (
             <div
-              key={refreshTrigger} // 🔥 Force re-render when progress updates
+              key={refreshTrigger}
               className="radial-progress bg-indigo-300 text-white border-indigo-600 border-4"
               role="progressbar"
               style={
