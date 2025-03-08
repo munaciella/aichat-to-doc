@@ -104,12 +104,17 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <main className="flex-grow">{children}</main>
-            {/* Footer - always sticks to the bottom */}
-            <footer className="bg-gray-900 text-white py-4 text-center">
-              © {new Date().getFullYear()} AI Chat PDF. All rights reserved.
-            </footer>{" "}
+            {/* © Paperly{" "}{new Date().getFullYear()}. */}
           </ThemeProvider>
-          <Toaster position="bottom-right" />
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              className:
+                "px-4 py-3 sm:px-6 sm:py-4 rounded-lg text-lg md:text-base text-left",
+            }}
+          />
+
+          {/* Footer */}
         </body>
       </html>
     </ClerkProvider>

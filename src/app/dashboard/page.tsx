@@ -6,7 +6,7 @@ import Documents from "@/components/Documents";
 const DashboardPage = () => {
 
   return (
-    <div className="h-full max-w-7xl mx-auto">
+    <div className="h-full max-w-7xl mx-auto p-4">
       <h1 className="text-3xl p-5 dark:bg-background font-extralight text-indigo-600 dark:text-indigo-400">My Documents</h1>
 
         <DashboardClient />

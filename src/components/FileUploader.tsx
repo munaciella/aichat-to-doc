@@ -11,13 +11,14 @@ import {
   SaveIcon,
 } from "lucide-react";
 import useUpload, { StatusText } from "../../hooks/useUpload";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 const FileUploader = () => {
   const { progress, status, fileId, handleUpload } = useUpload();
   const router = useRouter();
 
-  const [refreshTrigger, setRefreshTrigger] = useState(0); // 🔥 Force re-render on progress updates
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   useEffect(() => {
     if (fileId) {
@@ -26,16 +27,32 @@ const FileUploader = () => {
   }, [fileId, router]);
 
   useEffect(() => {
-    setRefreshTrigger((prev) => prev + 1); // 🔥 Trigger a re-render when progress changes
+    setRefreshTrigger((prev) => prev + 1);
   }, [progress]);
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
-      if (file) {
+
+      if (!file) {
+        toast.error("Please select a valid file.");
+        return;
+      }
+
+      const toastId = toast.loading(`Uploading ${file.name}...`);
+
+      try {
         await handleUpload(file);
-      } else {
-        // toast.error("Please upload a PDF file");
+
+        toast.success(`${file.name} uploaded successfully!`, {
+          id: toastId,
+        });
+      } catch (error) {
+        console.error("Upload error:", error);
+
+        toast.error(`Failed to upload ${file.name}. Please try again.`, {
+          id: toastId,
+        });
       }
     },
     [handleUpload]
@@ -60,12 +77,12 @@ const FileUploader = () => {
     useDropzone({
       onDrop,
       maxFiles: 1,
-      accept: {
-        "*": [], 
-      }, // ✅ Accepts all file types
       // accept: {
-      //   "application/pdf": [".pdf"],
+      //   "*": [],
       // },
+      accept: {
+        "application/pdf": [".pdf"],
+      },
     });
 
   //const uploadInProgress = progress !== null && progress >= 0 && progress <= 100;
