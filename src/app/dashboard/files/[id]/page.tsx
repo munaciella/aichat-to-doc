@@ -1,7 +1,9 @@
 export default async function ChatToFilePage({
-  params,
+  params: { id },
 }: {
-  params: { id: string };
+  params: { 
+    id: string; 
+  };
 }) {
-  return <div>ChatToFilePage: {params.id}</div>;
+  return <div>ChatToFilePage: {id}</div>;
 }

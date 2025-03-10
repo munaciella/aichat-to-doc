@@ -5,7 +5,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function generateEmbeddings(docId: string) {
   const { userId } = await auth();
 
@@ -13,9 +12,10 @@ export async function generateEmbeddings(docId: string) {
     throw new Error("Unauthorized: User not authenticated");
   }
 
-  //await generateEmbeddingsInPineconeVectorStore(docId);
+  await generateEmbeddingsInPineconeVectorStore(docId);
 
   revalidatePath('/dashboard');
+  
   return { completed: true };
 
 }

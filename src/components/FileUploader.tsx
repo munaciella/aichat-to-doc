@@ -62,14 +62,14 @@ const FileUploader = () => {
     [key in StatusText]: JSX.Element;
   } = {
     [StatusText.UPLOADING]: (
-      <RocketIcon className="h-20 w-20 text-indigo-600" />
+      <RocketIcon className="h-14 w-14 md:h-20 md:w-20 lg:h-20 lg:w-20 text-indigo-600 dark:text-indigo-400" />
     ),
     [StatusText.UPLOADED]: (
-      <CheckCircleIcon className="h-20 w-20 text-indigo-600" />
+      <CheckCircleIcon className="h-14 w-14 md:h-20 md:w-20 lg:h-20 lg:w-20 text-indigo-600 dark:text-indigo-400" />
     ),
-    [StatusText.SAVING]: <SaveIcon className="h-20 w-20 text-indigo-600" />,
+    [StatusText.SAVING]: <SaveIcon className="h-14 w-14 md:h-20 md:w-20 lg:h-20 lg:w-20 text-indigo-600 dark:text-indigo-400" />,
     [StatusText.GENERATING]: (
-      <HammerIcon className="h-20 w-20 text-indigo-600 animate-bounce" />
+      <HammerIcon className="h-14 w-14 md:h-20 md:w-20 lg:h-20 lg:w-20 text-indigo-600 dark:text-indigo-400 animate-bounce" />
     ),
   };
 
@@ -77,11 +77,14 @@ const FileUploader = () => {
     useDropzone({
       onDrop,
       maxFiles: 1,
-      // accept: {
-      //   "*": [],
-      // },
       accept: {
         "application/pdf": [".pdf"],
+        "application/msword": [".doc"],
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+          [".docx"],
+        "text/plain": [".txt"],
+        "text/markdown": [".md"],
+        "application/rtf": [".rtf"],
       },
     });
 
@@ -141,7 +144,7 @@ const FileUploader = () => {
           {progress !== null && (
             <div
               key={refreshTrigger}
-              className="radial-progress bg-indigo-300 text-white border-indigo-600 border-4"
+              className="radial-progress bg-indigo-300 dark:bg-indigo-700 text-white border-indigo-600 dark:border-indigo-400 border-4"
               role="progressbar"
               style={
                 {
@@ -155,8 +158,8 @@ const FileUploader = () => {
             </div>
           )}
 
-          <RocketIcon className="h-20 w-20 text-indigo-600" />
-          <p className="text-indigo-600 animate-pulse">
+          <RocketIcon className="h-14 w-14 md:h-20 md:w-20 lg:h-20 lg:w-20 text-indigo-600 dark:text-indigo-400" />
+          <p className="text-indigo-600 dark:text-indigo-400 animate-pulse">
             {StatusText.UPLOADING}
           </p>
         </div>
@@ -169,7 +172,7 @@ const FileUploader = () => {
             // @ts-expect-error daily-ui bug
             statusIcons[status!]
           }
-          <p className="text-indigo-600 animate-pulse">
+          <p className="text-indigo-600 dark:text-indigo-400 animate-pulse">
             {status !== null ? status.toString() : ""}
           </p>
         </div>
@@ -178,8 +181,8 @@ const FileUploader = () => {
       {!isUploading && !showStatus && (
         <div
           {...getRootProps()}
-          className={`p-10 border-2 border-dashed mt-10 w-[90%] border-indigo-600 text-indigo-600 rounded-lg h-96 flex items-center justify-center ${
-            isFocused || isDragAccept ? "bg-indigo-300" : "bg-indigo-100"
+          className={`p-10 border-2 border-dashed mt-10 w-[90%] border-indigo-600 dark:border-indigo-400 text-indigo-600 dark:text-indigo-400 rounded-lg h-96 flex items-center justify-center ${
+            isFocused || isDragAccept ? "bg-indigo-300 dark:bg-indigo-700" : "bg-indigo-100 dark:bg-gray-800"
           }`}
         >
           <input {...getInputProps()} />
@@ -187,13 +190,13 @@ const FileUploader = () => {
           <div className="flex flex-col items-center justify-center">
             {isDragActive ? (
               <>
-                <RocketIcon className="w-20 h-20 animate-ping" />
+                <RocketIcon className="h-14 w-14 md:h-20 md:w-20 lg:h-20 lg:w-20 animate-ping" />
                 <p>Drop the files here ...</p>
               </>
             ) : (
               <>
-                <CircleArrowDown className="w-20 h-20 animate-bounce" />
-                <p>Drag 'n' drop some files here, or click to select files</p>
+                <CircleArrowDown className="h-14 w-14 md:h-20 md:w-20 lg:h-20 lg:w-20 animate-bounce" />
+                <p>Drag 'n' drop a document, or click to select</p>
               </>
             )}
           </div>
