@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "postinstall": "npm install --legacy-peer-deps",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
+  "resolutions": {
+  "firebase-admin": "^13.2.0"
+},
   "dependencies": {
     "@clerk/nextjs": "^6.12.2",
     "@langchain/community": "^0.3.34",
