@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 "use server";
 
+import { generateEmbeddingsInPineconeVectorStore } from "@/lib/langchain";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
