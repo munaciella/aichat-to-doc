@@ -41,32 +41,26 @@ const PdfView = ({ url }: { url: string }) => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <div className="sticky top-0 z-50 bg-gray-100 p-2 rounded-b-lg">
-        <div className="max-w-6xl px-2 grid grid-cols-6 gap-2">
+    <div className="flex flex-col justify-center items-center bg-gray-100 dark:bg-gray-900 p-4">
+      <div className="sticky top-0 z-50 bg-gray-300 dark:bg-gray-800 p-3 rounded-md shadow-md w-full max-w-6xl">
+        <div className="grid grid-cols-6 gap-2">
           <Button
             variant="outline"
             disabled={pageNumber === 1}
-            onClick={() => {
-              if (pageNumber > 1) {
-                setPageNumber(pageNumber - 1);
-              }
-            }}
+            onClick={() => pageNumber > 1 && setPageNumber(pageNumber - 1)}
+            className="dark:border-gray-500 dark:text-gray-300 hover:dark:bg-gray-700"
           >
             Previous
           </Button>
-          <p className="flex items-center justify-center">
+          <p className="flex items-center justify-center text-gray-900 dark:text-gray-300 font-medium">
             {pageNumber} of {numPages}
           </p>
 
           <Button
             variant="outline"
             disabled={pageNumber === numPages}
-            onClick={() => {
-              if (pageNumber < numPages) {
-                setPageNumber(pageNumber + 1);
-              }
-            }}
+            onClick={() => pageNumber < numPages && setPageNumber(pageNumber + 1)}
+            className="dark:border-gray-500 dark:text-gray-300 hover:dark:bg-gray-700"
           >
             Next
           </Button>
@@ -74,6 +68,7 @@ const PdfView = ({ url }: { url: string }) => {
           <Button
             variant="outline"
             onClick={() => setRotation((rotation + 90) % 360)}
+            className="dark:border-gray-500 dark:text-gray-300 hover:dark:bg-gray-700"
           >
             <RotateCw />
           </Button>
@@ -81,9 +76,8 @@ const PdfView = ({ url }: { url: string }) => {
           <Button
             variant="outline"
             disabled={scale >= 1.5}
-            onClick={() => {
-                setScale(scale * 1.2)
-            }}
+            onClick={() => setScale(scale * 1.2)}
+            className="dark:border-gray-500 dark:text-gray-300 hover:dark:bg-gray-700"
           >
             <ZoomInIcon />
           </Button>
@@ -92,6 +86,7 @@ const PdfView = ({ url }: { url: string }) => {
             variant="outline"
             disabled={scale <= 0.75}
             onClick={() => setScale(scale / 1.2)}
+            className="dark:border-gray-500 dark:text-gray-300 hover:dark:bg-gray-700"
           >
             <ZoomOutIcon />
           </Button>
@@ -99,7 +94,7 @@ const PdfView = ({ url }: { url: string }) => {
       </div>
 
       {!file ? (
-        <Loader2Icon className="animate-spin h-20 w-20 text-indigo-600 mt-20" />
+        <Loader2Icon className="animate-spin h-14 w-14 md:h-20 md:w-20 lg:h-20 lg:w-20 text-indigo-600 mt-20" />
       ) : (
         <Document
           loading={null}
@@ -108,7 +103,7 @@ const PdfView = ({ url }: { url: string }) => {
           onLoadSuccess={onDocumentLoadSuccess}
           className="m-4 overflow-scroll"
         >
-          <Page className="shadow-lg" scale={scale} pageNumber={pageNumber} />
+          <Page className="shadow-lg dark:shadow-gray-700" scale={scale} pageNumber={pageNumber} />
         </Document>
       )}
     </div>
