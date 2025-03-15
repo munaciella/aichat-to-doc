@@ -9,7 +9,6 @@ import { Button } from "./ui/button";
 import { Loader2Icon, RotateCw, ZoomInIcon, ZoomOutIcon } from "lucide-react";
 
 //we need to configure CORS
-//gsutil cors set cors.json gs://<app-name>.appspot.com
 //gsutil cors set cors.json gs://paperly-ee88f.appspot.com
 //go here >>> https://console.cloud.google.com/
 //create new file in editor calls cors.json
@@ -94,7 +93,7 @@ const PdfView = ({ url }: { url: string }) => {
       </div>
 
       {!file ? (
-        <Loader2Icon className="animate-spin h-14 w-14 md:h-20 md:w-20 lg:h-20 lg:w-20 text-indigo-600 mt-20" />
+        <Loader2Icon className="animate-spin h-14 w-14 md:h-20 md:w-20 lg:h-20 lg:w-20 text-indigo-600 dark:text-indigo-500 mt-20" />
       ) : (
         <Document
           loading={null}
