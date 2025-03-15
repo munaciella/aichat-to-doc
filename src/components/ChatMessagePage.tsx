@@ -54,19 +54,4 @@ const ChatMessagePage = ({ message }: { message: Message }) => {
   );
 };
 
-{
-  /* <div className={`chat-bubble prose rounded-lg ${isHuman && "bg-indigo-600 dark:bg-indigo-400 text-white"}`}>
-         {message.message === "Thinking..." ? (
-            <div className="flex items-center justify-center">
-                <Loader2Icon className="animate-spin h-5 w-5 text-white" />
-            </div>
-         ) : (
-            <Markdown>{message.message}</Markdown>
-         )}
-      </div>
-    </div>
-  )
-} */
-}
-
 export default ChatMessagePage;

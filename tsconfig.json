@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "strict": true, // ✅ Re-enable strict mode for better type checking
-    "noImplicitAny": true, // ✅ Forces explicit types (avoids silent bugs)
-    "noEmitOnError": true, // ✅ Prevents emitting JS files if TypeScript errors exist
-    "ignoreDeprecations": "5.0", // ✅ Ignores old TypeScript deprecations
+    "strict": true, // Enable strict mode for better type checking
+    "noImplicitAny": true, // Forces explicit types (avoids silent bugs)
+    "noEmitOnError": true, // Prevents emitting JS files if TypeScript errors exist
+    "ignoreDeprecations": "5.0", // Ignores old TypeScript deprecations
     "target": "ES2020",
     "lib": [
       "dom",
@@ -11,8 +11,8 @@
       "esnext"
     ],
     "allowJs": true,
-    "skipLibCheck": true, // ✅ Avoids conflicts in node_modules
-    "noUncheckedIndexedAccess": true, // ✅ Improves array/obj safety
+    "skipLibCheck": true, // Avoids conflicts in node_modules
+    "noUncheckedIndexedAccess": true, // Improves array/obj safety
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
