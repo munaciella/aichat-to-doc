@@ -1,6 +1,10 @@
-const getBaseUrl = () =>
-    process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : process.env.VERCEL_URL
-
-    export default getBaseUrl
+const getBaseUrl = () => {
+    if (process.env.NODE_ENV === "development") {
+      return "http://localhost:3000";
+    }
+  
+    return process.env.NEXT_PUBLIC_BASE_URL || `https://${process.env.VERCEL_URL}`;
+  };
+  
+  export default getBaseUrl;
+  
