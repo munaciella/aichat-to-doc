@@ -51,7 +51,7 @@ export default function RootLayout({
             {/* © Paperly{" "}{new Date().getFullYear()}. */}
           </ThemeProvider>
           <Toaster
-            position="bottom-right"
+            position="top-center"
             toastOptions={{
               className:
                 "px-4 py-3 sm:px-6 sm:py-4 rounded-lg text-lg md:text-base text-left",
