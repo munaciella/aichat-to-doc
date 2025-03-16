@@ -1,15 +1,61 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-'use client';
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { useUser } from "@clerk/nextjs";
 import { CheckIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import useSubscription from "../../../../hooks/useSubscription";
+import { useTransition } from "react";
+import getStripe from "@/lib/stripe-js";
+import { createCheckoutSession } from "../../../../actions/createCkeckoutSession";
+import { createStripePortal } from "../../../../actions/createStripePortal";
+
+export type UserDetails = {
+  email: string;
+  name: string;
+};
 
 const PricingPage = () => {
-    const {user} = useUser();
-    const router = useRouter();
-    // pull in user subscription
+  const { user } = useUser();
+  const router = useRouter();
+  const { hasActiveMembership, loading } = useSubscription();
+  const [isPending, startTransition] = useTransition();
+
+  const handleUpgrade = () => {
+    if (!user) return;
+
+    // if (!user.fullName) {
+    //     toast.warning("Your name is missing. It will default to your email.");
+    //   }
+    // if (!user.primaryEmailAddress) {
+    //     toast.warning("Your email is missing. It will default to no-email@example.com.");
+    //   }
+
+    const userDetails: UserDetails = {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+        email: user.primaryEmailAddress?.toString()!,
+        name: user.fullName!,
+        //email: user.primaryEmailAddress?.toString() ?? "no-email@example.com",
+        //name: user.fullName ?? "Anonymous User",
+        //email: user.primaryEmailAddress?.toString()!, // Must exist, so force `!`
+        //name: user.fullName ?? user.primaryEmailAddress?.toString()!, // Fallback to email
+    }
+
+    startTransition(async () => {
+        const stripe = await getStripe()
+
+        if (hasActiveMembership) {
+          // Redirect to billing portal
+          const stripePortalUrl = await createStripePortal()
+          return router.push(stripePortalUrl);
+        }
+
+        const sessionId = await createCheckoutSession(userDetails);
+
+        await stripe?.redirectToCheckout({ sessionId });
+    })
+  }
+
   return (
     <div>
       <div className="py-24 sm:py-32">
@@ -28,7 +74,7 @@ const PricingPage = () => {
           streamlining your workflow.
         </p>
 
-        <div className="max-w-md mx-auto mt-10 grid grid-cols-1 md:grid-cols-2 md:max-w-2xl gap-8 lg:max-w-4xl">
+        <div className="max-w-md mx-auto mt-10 grid grid-cols-1 md:grid-cols-2 md:max-w-2xl gap-8 lg:max-w-4xl p-3">
           {/* Free plan */}
           <div className="ring-1 ring-gray-300 dark:ring-gray-600 p-8 h-fit pb-12 rounded-3xl">
             <h3 className="text-lg font-semibold leading-8 text-gray-900 dark:text-white">
@@ -81,8 +127,11 @@ const PricingPage = () => {
               </span>
             </p>
 
-            <Button className="bg-indigo-600 dark:bg-indigo-400 w-full text-white shadow-sm hover:bg-indigo-500 dark:hover:bg-indigo-300 mt-6 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:focus-visible:outline-indigo-400">
-              Upgrade to Pro
+            <Button className="bg-indigo-600 dark:bg-indigo-400 w-full text-white shadow-sm hover:bg-indigo-500 dark:hover:bg-indigo-300 mt-6 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:focus-visible:outline-indigo-400"
+            disabled={loading || isPending}
+            onClick={handleUpgrade}
+            >
+              {isPending || loading ? "Loading..." : hasActiveMembership ? "Manage Subscription" : "Upgrade to Pro"}
             </Button>
 
             <ul
