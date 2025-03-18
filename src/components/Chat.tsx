@@ -44,7 +44,9 @@ const Chat = ({ id }: { id: string }) => {
 
     if (error) {
       console.error("Firestore Error:", error);
-      toast.error("Failed to load chat history.");
+      toast.error("Failed to load chat history.", {
+        style: { backgroundColor: "#DC2626", color: "white" },
+      });
       return;
     }
 
@@ -96,7 +98,9 @@ const Chat = ({ id }: { id: string }) => {
         const { success, message } = await askQuestion(id, q);
 
         if (!success) {
-          toast.error(message || "An error occurred. Please try again.");
+          toast.error(message || "An error occurred. Please try again.", {
+            style: { backgroundColor: "#DC2626", color: "white" },
+          });
 
           setMessages((prev) =>
             prev.slice(0, prev.length - 1).concat([
@@ -110,7 +114,9 @@ const Chat = ({ id }: { id: string }) => {
         }
       } catch (err) {
         console.error("Chat Error:", err);
-        toast.error("An error occurred while processing your question.");
+        toast.error("An error occurred while processing your question.", {
+          style: { backgroundColor: "#DC2626", color: "white" },
+        });
         setMessages((prev) =>
           prev.slice(0, prev.length - 1).concat([
             {

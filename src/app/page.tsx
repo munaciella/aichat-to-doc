@@ -320,9 +320,15 @@ export default function Home() {
 
   const handleClick = () => {
     if (isSignedIn) {
-      toast.success("Redirecting to dashboard...");
+      toast.info("Redirecting to dashboard...",{
+        style: { backgroundColor: "#2563EB", color: "white" },
+      });
     } else {
-      toast.error("You need to be signed in to get started.");
+      toast.warning("You need to be signed in to get started.", {
+        description: "Redirecting to sign in page...",
+        style: { backgroundColor: "#EAB308", color: "white" },
+        
+      });
       localStorage.setItem("showSignInToast", "true");
     }
 
