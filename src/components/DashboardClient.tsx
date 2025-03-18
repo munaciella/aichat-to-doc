@@ -9,7 +9,9 @@ export default function DashboardClient() {
 
     if (showSignInToast) {
       setTimeout(() => {
-        toast.success("Signed in successfully!");
+        toast.success("Signed in successfully!", {
+          style: { backgroundColor: "#16A34A", color: "white" },
+        });
       }, 800);
 
       localStorage.removeItem("showSignInToast");

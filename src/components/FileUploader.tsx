@@ -35,23 +35,29 @@ const FileUploader = () => {
       const file = acceptedFiles[0];
 
       if (!file) {
-        toast.error("Please select a valid file.");
+        toast.warning("Please select a valid file.", {
+          style: { backgroundColor: "#EAB308", color: "white" },
+        });
         return;
       }
 
-      const toastId = toast.loading(`Uploading ${file.name}...`);
+      const toastId = toast.loading(`Uploading ${file.name}...`, {
+        style: { backgroundColor: "#2563EB", color: "white" },
+      });
 
       try {
         await handleUpload(file);
 
         toast.success(`${file.name} uploaded successfully!`, {
           id: toastId,
+          style: { backgroundColor: "#16A34A", color: "white" },
         });
       } catch (error) {
         console.error("Upload error:", error);
 
         toast.error(`Failed to upload ${file.name}. Please try again.`, {
           id: toastId,
+          style: { backgroundColor: "#DC2626", color: "white" },
         });
       }
     },
