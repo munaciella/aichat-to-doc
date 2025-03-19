@@ -1,22 +1,39 @@
 "use client";
 
-import { PlusCircleIcon } from "lucide-react";
+import { FrownIcon, PlusCircleIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import useSubscription from "../../hooks/useSubscription";
 
 const PlaceholderDocument = () => {
+  const { isOverFileLimit } = useSubscription();
   const router = useRouter();
 
   const handleClick = () => {
-    router.push("/dashboard/upload");
+    if (isOverFileLimit) {
+      router.push("/dashboard/upgrade");
+    } else {
+      router.push("/dashboard/upload");
+    }
   };
   return (
     <Button
       onClick={handleClick}
-      className="flex flex-col items-center justify-center w-36 h-48 lg:w-62 lg:h-72 rounded-xl bg-gray-200 drop-shadow-md text-gray-400 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600 cursor-pointer"
+      className="flex flex-col items-center justify-center w-36 h-48 lg:w-60 lg:h-72 rounded-xl bg-gray-200 drop-shadow-md text-gray-400 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600 cursor-pointer"
     >
-      <PlusCircleIcon className="h-16 w-16" />
-      <p>Add a document</p>
+      {/* ✅ Increased Icon Size for Visibility */}
+      {isOverFileLimit ? (
+        <FrownIcon className="h-12 w-12 size-auto" />
+      ) : (
+        <PlusCircleIcon className="h-12 w-12 size-auto" />
+      )}
+
+      {/* ✅ Ensure Text Wraps on Small Screens */}
+  <p className="font-semibold text-sm lg:text-base text-center leading-tight break-words whitespace-normal w-24 lg:w-40 mt-2">
+    {isOverFileLimit
+      ? "Upgrade to upload more documents"
+      : "Upload a document"}
+  </p>
     </Button>
   );
 };

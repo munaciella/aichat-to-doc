@@ -236,7 +236,7 @@ const Document = ({
   return (
     <>
       <div
-        className="flex flex-col w-36 h-48 lg:w-62 lg:h-72 rounded-xl bg-gray-200 dark:bg-gray-900 shadow-lg p-4 transition-all transform hover:scale-105 hover:bg-indigo-600 dark:hover:bg-indigo-400 hover:text-white cursor-pointer group"
+        className="flex flex-col w-36 h-48 lg:w-60 lg:h-72 rounded-xl bg-gray-200 dark:bg-gray-900 shadow-lg p-4 transition-all transform hover:scale-105 hover:bg-indigo-600 dark:hover:bg-indigo-400 hover:text-white cursor-pointer group"
         onClick={() => router.push(`/dashboard/files/${id}`)}
       >
         <div className="flex-1">
