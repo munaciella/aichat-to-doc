@@ -53,8 +53,9 @@ export default function RootLayout({
           <Toaster
             position="top-center"
             toastOptions={{
+              duration: 5000,
               className:
-                "px-4 py-3 sm:px-6 sm:py-4 rounded-lg text-lg md:text-base text-left",
+                "px-6 py-5 sm:px-8 sm:py-6 lg:px-10 lg:py-8 rounded-lg text-lg md:text-xl text-left",
             }}
           />
 

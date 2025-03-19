@@ -19,6 +19,7 @@
 
 import { initializeApp, getApps, getApp, App, cert, ServiceAccount } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
+import { getStorage } from "firebase-admin/storage";
 
 function getServiceAccount(): ServiceAccount {
   const serviceAccount = {
@@ -54,5 +55,6 @@ if (!getApps().length) {
 }
 
 const adminDb = getFirestore(app);
+const adminStorage = getStorage(app);
 
-export { app as adminApp, adminDb };
+export { app as adminApp, adminDb, adminStorage };

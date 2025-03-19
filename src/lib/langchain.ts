@@ -31,8 +31,7 @@ async function fetchMessagesFromDB(docId: string) {
   }
 
   console.log("--- Fetching chat history from Firebase database... ---");
-  //const LIMIT = 6;
-  // Get last 6 messages from chat history
+  const LIMIT = 6;
   const chats = await adminDb
   .collection("users")
   .doc(userId)
@@ -40,7 +39,7 @@ async function fetchMessagesFromDB(docId: string) {
   .doc(docId)
   .collection("chat")
   .orderBy("createdAt", "desc")
-  //.limit(LIMIT)
+  .limit(LIMIT)
   .get();
 
   const chatHistory = chats.docs.map((doc) =>

@@ -4,7 +4,6 @@ import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "../firebaseAdmin";
 import { Message } from "@/components/Chat";
 import { generateLangchainCompletion } from "@/lib/langchain";
-//import { FREE_LIMIT, PRO_LIMIT } from "../hooks/useSubscription";
 
 const PRO_LIMIT = 20;
 const FREE_LIMIT = 2;
