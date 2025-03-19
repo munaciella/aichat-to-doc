@@ -1,20 +1,113 @@
+// import { SignedIn, UserButton } from "@clerk/nextjs";
+// import Link from "next/link";
+// import { Button } from "./ui/button";
+// import { FilePlus2 } from "lucide-react";
+// import { ThemeToggle } from "./ThemeToggle";
+// import UpgradeButton from "./UpgradeButton";
+
+// const Header = () => {
+//   return (
+//     <div className="flex justify-between bg-white dark:bg-gray-900 shadow-sm dark:shadow-md p-5 border-b dark:border-gray-700">
+//       <Link href="/" className="text-2xl font-semibold text-gray-900 dark:text-white">
+//         <span className="text-indigo-600 dark:text-indigo-400">Paperly</span>
+//       </Link>
+
+//       <SignedIn>
+//         <div className="flex items-center space-x-2">
+//           <Button asChild variant="link" className="hidden md:flex text-gray-900 dark:text-gray-300">
+//             <Link href="/dashboard/upgrade">Pricing</Link>
+//           </Button>
+
+//           <Button asChild variant="outline" className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-300">
+//             <Link href="/dashboard">My Documents</Link>
+//           </Button>
+
+//           <Button asChild variant="outline" className="border-indigo-600 dark:border-indigo-400">
+//             <Link href="/dashboard/upload">
+//               <FilePlus2 className="text-indigo-600 dark:text-indigo-400" />
+//             </Link>
+//           </Button>
+
+//           <UpgradeButton />
+//           <UserButton />
+
+//           <ThemeToggle />
+//         </div>
+//       </SignedIn>
+//     </div>
+//   );
+// };
+
+// export default Header;
+
+
+
+"use client";
+
 import { SignedIn, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { FilePlus2 } from "lucide-react";
+import { FilePlus2, Menu } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import UpgradeButton from "./UpgradeButton";
+import { Sheet, SheetTrigger, SheetContent, SheetClose } from "./ui/sheet";
 
 const Header = () => {
   return (
-    <div className="flex justify-between bg-white dark:bg-gray-900 shadow-sm dark:shadow-md p-5 border-b dark:border-gray-700">
-      <Link href="/" className="text-2xl font-semibold text-gray-900 dark:text-white">
+    <header className="flex items-center justify-between px-5 py-4 bg-white dark:bg-gray-900 shadow-sm dark:shadow-md border-b dark:border-gray-700">
+      {/* ✅ Mobile Menu (SM Only) */}
+      <div className="md:hidden">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <Menu className="w-10 h-10" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="w-64 py-16 px-2">
+            <div className="flex flex-col space-y-4">
+              <SheetClose asChild>
+                <Button asChild variant="ghost">
+                  <Link href="/dashboard/upgrade">Pricing</Link>
+                </Button>
+              </SheetClose>
+
+              <SheetClose asChild>
+                <Button asChild variant="outline">
+                  <Link href="/dashboard">My Documents</Link>
+                </Button>
+              </SheetClose>
+
+              <SheetClose asChild>
+                <Button asChild variant="outline">
+                  <Link href="/dashboard/upload">
+                    <FilePlus2 className="text-indigo-600 dark:text-indigo-400" />
+                  </Link>
+                </Button>
+              </SheetClose>
+
+              <UpgradeButton />
+            </div>
+
+            {/* ✅ Close Button */}
+            <SheetClose asChild>
+              <Button variant="outline" className="w-full mt-4">
+                Close
+              </Button>
+            </SheetClose>
+          </SheetContent>
+        </Sheet>
+      </div>
+
+      {/* ✅ Centered Logo + "Paperly" (SM+ Screens) */}
+      <Link href="/" className="text-2xl font-semibold text-gray-900 dark:text-white flex-1 text-center md:text-left">
         <span className="text-indigo-600 dark:text-indigo-400">Paperly</span>
       </Link>
 
+
+      {/* ✅ Desktop Nav (MD+ Screens Only) */}
       <SignedIn>
-        <div className="flex items-center space-x-2">
-          <Button asChild variant="link" className="hidden md:flex text-gray-900 dark:text-gray-300">
+        <nav className="hidden md:flex items-center space-x-2">
+          <Button asChild variant="link" className="text-gray-900 dark:text-gray-300">
             <Link href="/dashboard/upgrade">Pricing</Link>
           </Button>
 
@@ -29,12 +122,16 @@ const Header = () => {
           </Button>
 
           <UpgradeButton />
-          <UserButton />
-
-          <ThemeToggle />
-        </div>
+        </nav>
       </SignedIn>
-    </div>
+      {/* ✅ Right-Side: User Button & Theme Toggle */}
+      <div className="flex items-center space-x-2 ml-2">
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+        <ThemeToggle />
+      </div>
+    </header>
   );
 };
 
