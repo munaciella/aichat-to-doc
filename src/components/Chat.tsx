@@ -11,6 +11,7 @@ import { db } from "../../firebase";
 import { askQuestion } from "../../actions/askQuestion";
 import ChatMessagePage from "./ChatMessagePage";
 import {toast} from "sonner"
+import { useRouter } from "next/navigation";
 
 export type Message = {
   id?: string;
@@ -21,6 +22,7 @@ export type Message = {
 
 const Chat = ({ id }: { id: string }) => {
   const { user } = useUser();
+  const router = useRouter();
 
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
@@ -100,6 +102,11 @@ const Chat = ({ id }: { id: string }) => {
         if (!success) {
           toast.error(message || "An error occurred. Please try again.", {
             style: { backgroundColor: "#DC2626", color: "white" },
+            duration: 5000,
+            action: {
+              label: "Upgrade Here",
+              onClick: () => router.push("/dashboard/upgrade"),
+            },
           });
 
           setMessages((prev) =>
@@ -116,6 +123,11 @@ const Chat = ({ id }: { id: string }) => {
         console.error("Chat Error:", err);
         toast.error("An error occurred while processing your question.", {
           style: { backgroundColor: "#DC2626", color: "white" },
+          duration: 5000,
+          action: {
+            label: "Upgrade",
+            onClick: () => router.push("/dashboard/upgrade"),
+          },
         });
         setMessages((prev) =>
           prev.slice(0, prev.length - 1).concat([
