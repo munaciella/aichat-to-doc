@@ -54,7 +54,7 @@ import Image from "next/image";
 
 const Header = () => {
   return (
-    <header className="flex items-center justify-between px-5 py-4 bg-white dark:bg-gray-900 shadow-sm dark:shadow-md border-b dark:border-gray-700">
+    <header className="flex items-center justify-between px-6 py-3 bg-white dark:bg-gray-900 shadow-sm dark:shadow-md border-b dark:border-gray-700">
       {/* ✅ Mobile Menu (SM Only) */}
       <div className="md:hidden">
         <Sheet>
