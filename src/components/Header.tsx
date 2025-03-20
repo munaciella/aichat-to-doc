@@ -40,8 +40,6 @@
 
 // export default Header;
 
-
-
 "use client";
 
 import { SignedIn, UserButton } from "@clerk/nextjs";
@@ -51,6 +49,8 @@ import { FilePlus2, Menu } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import UpgradeButton from "./UpgradeButton";
 import { Sheet, SheetTrigger, SheetContent, SheetClose } from "./ui/sheet";
+import logo from "../../public/paperly.png";
+import Image from "next/image";
 
 const Header = () => {
   return (
@@ -60,7 +60,7 @@ const Header = () => {
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon">
-              <Menu className="w-10 h-10" />
+              <Menu className="w-6 h-6 size-0 mr-4" />
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-64 py-16 px-2">
@@ -80,6 +80,9 @@ const Header = () => {
               <SheetClose asChild>
                 <Button asChild variant="outline">
                   <Link href="/dashboard/upload">
+                    <span className="text-indigo-600 dark:text-indigo-400">
+                      Upload
+                    </span>
                     <FilePlus2 className="text-indigo-600 dark:text-indigo-400" />
                   </Link>
                 </Button>
@@ -99,24 +102,54 @@ const Header = () => {
       </div>
 
       {/* ✅ Centered Logo + "Paperly" (SM+ Screens) */}
-      <Link href="/" className="text-2xl font-semibold text-gray-900 dark:text-white flex-1 text-center md:text-left">
-        <span className="text-indigo-600 dark:text-indigo-400">Paperly</span>
-      </Link>
-
+      {/* <Link
+  href="/"
+  className="text-2xl font-semibold text-gray-900 dark:text-white flex-1 text-center 
+     md:text-left md:ml-8"
+>
+  <span className="text-indigo-600 dark:text-indigo-400">Paperly</span>
+</Link> */}
+<div className="flex-1 flex flex-col items-center md:items-start md:ml-6">
+  <Link href="/" className="flex flex-col items-center md:items-start">
+    <Image 
+      src={logo} 
+      alt="Paperly Logo" 
+      className="w-8 h-8 md:w-12 md:h-12"
+    />
+    <span className="text-indigo-600 dark:text-indigo-400 text-lg font-semibold -mt-2">
+      Paperly
+    </span>
+  </Link>
+</div>
 
       {/* ✅ Desktop Nav (MD+ Screens Only) */}
       <SignedIn>
         <nav className="hidden md:flex items-center space-x-2">
-          <Button asChild variant="link" className="text-gray-900 dark:text-gray-300">
+          <Button
+            asChild
+            variant="link"
+            className="text-gray-900 dark:text-gray-300"
+          >
             <Link href="/dashboard/upgrade">Pricing</Link>
           </Button>
 
-          <Button asChild variant="outline" className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-300">
+          <Button
+            asChild
+            variant="outline"
+            className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-300"
+          >
             <Link href="/dashboard">My Documents</Link>
           </Button>
 
-          <Button asChild variant="outline" className="border-indigo-600 dark:border-indigo-400">
+          <Button
+            asChild
+            variant="outline"
+            className="border-indigo-600 dark:border-indigo-400"
+          >
             <Link href="/dashboard/upload">
+              <span className="text-indigo-600 dark:text-indigo-400">
+                Upload
+              </span>
               <FilePlus2 className="text-indigo-600 dark:text-indigo-400" />
             </Link>
           </Button>
