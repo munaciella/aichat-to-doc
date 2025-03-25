@@ -54,7 +54,7 @@ import Image from "next/image";
 
 const Header = () => {
   return (
-    <header className="flex items-center justify-between px-6 py-3 bg-white dark:bg-gray-900 shadow-sm dark:shadow-md border-b dark:border-gray-700">
+    <header className="sticky top-0 z-50 flex items-center justify-between px-6 py-3 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm border-b border-gray-200/70 dark:border-gray-700/50">
       {/* ✅ Mobile Menu (SM Only) */}
       <div className="md:hidden">
         <Sheet>
@@ -109,18 +109,18 @@ const Header = () => {
 >
   <span className="text-indigo-600 dark:text-indigo-400">Paperly</span>
 </Link> */}
-<div className="flex-1 flex flex-col items-center md:items-start md:ml-6">
-  <Link href="/" className="flex flex-col items-center md:items-start">
-    <Image 
-      src={logo} 
-      alt="Paperly Logo" 
-      className="w-8 h-8 md:w-12 md:h-12"
-    />
-    <span className="text-indigo-600 dark:text-indigo-400 text-lg font-semibold -mt-2">
-      Paperly
-    </span>
-  </Link>
-</div>
+      <div className="flex-1 flex flex-col items-center md:items-start md:ml-6">
+        <Link href="/" className="flex flex-col items-center md:items-start">
+          <Image
+            src={logo}
+            alt="Paperly Logo"
+            className="w-8 h-8 md:w-12 md:h-12"
+          />
+          <span className="text-indigo-600 dark:text-indigo-400 text-lg font-semibold -mt-2">
+            Paperly
+          </span>
+        </Link>
+      </div>
 
       {/* ✅ Desktop Nav (MD+ Screens Only) */}
       <SignedIn>

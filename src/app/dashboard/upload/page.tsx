@@ -2,7 +2,7 @@ import FileUploader from "@/components/FileUploader"
 
 const UploadPage = () => {
   return (
-    <div>
+    <div className="mt-4">
         <FileUploader />
     </div>
   )

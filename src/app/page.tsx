@@ -278,9 +278,9 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 
 const features = [
   {
-    name: "Store your PDF Documents",
+    name: "Store your Documents",
     description:
-      "Keep all your important PDF files securely stored and easily accessible anytime, anywhere.",
+      "Keep all your important documents securely stored and easily accessible anytime, anywhere.",
     icon: GlobeIcon,
   },
   {
@@ -298,7 +298,7 @@ const features = [
   {
     name: "Interactive PDF Viewer",
     description:
-      "Engage with your PDFs like never before using our intuitive and interactive viewer.",
+      "Engage with your docs like never before using our intuitive and interactive viewer.",
     icon: EyeIcon,
   },
   {
@@ -310,7 +310,7 @@ const features = [
   {
     name: "Responsive Across Devices",
     description:
-      "Access and chat with your PDFs seamlessly on any device, whether it's your desktop, tablet, or smartphone.",
+      "Access and chat with your docs seamlessly on any device, whether it's your desktop, tablet, or smartphone.",
     icon: MonitorSmartphoneIcon,
   },
 ];
@@ -352,20 +352,20 @@ export default function Home() {
               Your Interactive Document Companion
             </h2>
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
-              Transform Your PDFs into Interactive Conversations
+              Transform Your Docs into Interactive Conversations
             </p>
 
             <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
               Introducing{" "}
               <span className="font-bold text-indigo-600 dark:text-indigo-400">
-                Chat with PDF
+                Paperly
               </span>
               <br />
               <br /> Upload your document, and our chatbot will respond to your
               questions, summarise content, and provide the answers you need. 
               Perfect for everyone,{" "}
               <span className="text-indigo-600 dark:text-indigo-400">
-                Chat with PDF
+                Paperly
               </span>{" "}
               transforms static documents into{" "}
               <span className="font-bold">dynamic conversations</span>,
