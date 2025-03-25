@@ -130,6 +130,9 @@ export async function POST(req: NextRequest) {
         }
     };
 
+    // TODO: Add logic to handle the different event types
+    // invoice.payment_failed
+	// customer.subscription.updated
     switch (event.type) {
         case "checkout.session.completed":
         case "payment_intent.succeeded": {
