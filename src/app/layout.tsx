@@ -4,7 +4,6 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner";
-//import Footer from "@/components/Footer";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -58,7 +57,6 @@ export default function RootLayout({
                 "px-6 py-5 sm:px-8 sm:py-6 lg:px-10 lg:py-8 rounded-lg text-lg md:text-xl text-left",
             }}
           />
-          {/* <Footer /> */}
         </body>
       </html>
     </ClerkProvider>
