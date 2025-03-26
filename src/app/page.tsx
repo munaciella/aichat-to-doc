@@ -334,7 +334,7 @@ export default function Home() {
 
     setTimeout(() => {
       window.location.href = "/dashboard";
-    }, 1000);
+    }, 600);
   };
 
   return (

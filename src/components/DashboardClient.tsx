@@ -12,7 +12,7 @@ export default function DashboardClient() {
         toast.success("Signed in successfully!", {
           style: { backgroundColor: "#16A34A", color: "white" },
         });
-      }, 800);
+      }, 600);
 
       localStorage.removeItem("showSignInToast");
     }
