@@ -47,7 +47,7 @@ const PdfView = ({ url }: { url: string }) => {
             variant="outline"
             disabled={pageNumber === 1}
             onClick={() => pageNumber > 1 && setPageNumber(pageNumber - 1)}
-            className="dark:border-gray-500 dark:text-gray-300 hover:dark:bg-gray-700"
+            className="dark:border-gray-500 dark:text-gray-300 hover:dark:bg-gray-700 text-xs md:text-sm sm:text-sm lg:text-sm"
           >
             Previous
           </Button>
@@ -59,7 +59,7 @@ const PdfView = ({ url }: { url: string }) => {
             variant="outline"
             disabled={pageNumber === numPages}
             onClick={() => pageNumber < numPages && setPageNumber(pageNumber + 1)}
-            className="dark:border-gray-500 dark:text-gray-300 hover:dark:bg-gray-700"
+            className="dark:border-gray-500 dark:text-gray-300 hover:dark:bg-gray-700 text-xs md:text-sm sm:text-sm lg:text-sm"
           >
             Next
           </Button>
