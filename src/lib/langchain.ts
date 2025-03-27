@@ -100,6 +100,51 @@ async function namespaceExists(index: Index<RecordMetadata>, namespace: string) 
     return namespaces?.[namespace] !== undefined;
 }
 
+// export async function generateEmbeddingsInPineconeVectorStore(docId: string) {
+//   const { userId } = await auth();
+
+//   if (!userId) {
+//     throw new Error("Unauthorized: User not authenticated");
+//   }
+
+//   let pineconeVectorStore;
+
+//   console.log("--- Generating embeddings... ---");
+//   const embeddings = new OpenAIEmbeddings();
+
+//   const index = await pineconeClient.index(indexName);
+//   const namespaceAlreadyExists = await namespaceExists(index, docId)
+
+//   if (namespaceAlreadyExists) {
+//     console.log(`--- Namespace ${docId} already exists, reusing existing embeddings... ---`);
+
+//     pineconeVectorStore = await PineconeStore.fromExistingIndex(embeddings, {
+//       pineconeIndex: index,
+//       namespace: docId,
+//     });
+
+//     return pineconeVectorStore;
+//   } else {
+//     //console.log(`--- Namespace ${docId} does not exist, generating new embeddings... ---`);
+//     const splitDocs = await generateDocs(docId);
+
+//     console.log(
+//         `--- Storing the embeddings in namespace ${docId} in the ${indexName} Pinecone vector store... ---`
+//     )
+
+//     pineconeVectorStore = await PineconeStore.fromDocuments(
+//         splitDocs,
+//         embeddings,
+//         {
+//           pineconeIndex: index,
+//           namespace: docId,
+//         }
+//     );
+
+//     return pineconeVectorStore;
+//   }
+// }
+
 export async function generateEmbeddingsInPineconeVectorStore(docId: string) {
   const { userId } = await auth();
 
@@ -111,9 +156,8 @@ export async function generateEmbeddingsInPineconeVectorStore(docId: string) {
 
   console.log("--- Generating embeddings... ---");
   const embeddings = new OpenAIEmbeddings();
-
   const index = await pineconeClient.index(indexName);
-  const namespaceAlreadyExists = await namespaceExists(index, docId)
+  const namespaceAlreadyExists = await namespaceExists(index, docId);
 
   if (namespaceAlreadyExists) {
     console.log(`--- Namespace ${docId} already exists, reusing existing embeddings... ---`);
@@ -124,24 +168,40 @@ export async function generateEmbeddingsInPineconeVectorStore(docId: string) {
     });
 
     return pineconeVectorStore;
-  } else {
-    //console.log(`--- Namespace ${docId} does not exist, generating new embeddings... ---`);
-    const splitDocs = await generateDocs(docId);
+  }
 
-    console.log(
-        `--- Storing the embeddings in namespace ${docId} in the ${indexName} Pinecone vector store... ---`
-    )
+  // Notify user if doc is likely to be large (this could be enhanced by checking byte size earlier if needed)
+  const splitDocs = await generateDocs(docId);
+  if (splitDocs.length > 500) {
+    console.log("--- Document is large. Processing in smaller batches... ---");
+  }
 
-    pineconeVectorStore = await PineconeStore.fromDocuments(
-        splitDocs,
-        embeddings,
-        {
-          pineconeIndex: index,
-          namespace: docId,
-        }
-    );
+  console.log(
+    `--- Storing the embeddings in namespace ${docId} in the ${indexName} Pinecone vector store... ---`
+  );
+
+  try {
+    const chunkSize = 300; // Customize this if needed
+    for (let i = 0; i < splitDocs.length; i += chunkSize) {
+      const chunk = splitDocs.slice(i, i + chunkSize);
+      await PineconeStore.fromDocuments(chunk, embeddings, {
+        pineconeIndex: index,
+        namespace: docId,
+      });
+      // Optional delay between batches
+      // await new Promise((res) => setTimeout(res, 500));
+    }
+
+    // Reuse the completed vector store
+    pineconeVectorStore = await PineconeStore.fromExistingIndex(embeddings, {
+      pineconeIndex: index,
+      namespace: docId,
+    });
 
     return pineconeVectorStore;
+  } catch (error) {
+    console.error("❌ Failed to generate embeddings:", error);
+    throw new Error("Failed to generate embeddings for this document. Please try again later or use a smaller file.");
   }
 }
 
