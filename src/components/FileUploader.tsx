@@ -64,16 +64,36 @@ const FileUploader = () => {
         style: { backgroundColor: "#2563EB", color: "white" },
       });
 
+      // try {
+      //   await handleUpload(file);
+
+      //   toast.success(`${file.name} uploaded successfully!`, {
+      //     id: toastId,
+      //     style: { backgroundColor: "#16A34A", color: "white" },
+      //   });
+      // } catch (error) {
+      //   console.error("Upload error:", error);
+
+      //   toast.error(`Failed to upload ${file.name}. Please try again.`, {
+      //     id: toastId,
+      //     style: { backgroundColor: "#DC2626", color: "white" },
+      //   });
+      // }
       try {
         await handleUpload(file);
-
+      
         toast.success(`${file.name} uploaded successfully!`, {
           id: toastId,
           style: { backgroundColor: "#16A34A", color: "white" },
         });
+      
+        // ⏳ Give backend time to sync, then redirect
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 1200); // adjust if needed
       } catch (error) {
         console.error("Upload error:", error);
-
+      
         toast.error(`Failed to upload ${file.name}. Please try again.`, {
           id: toastId,
           style: { backgroundColor: "#DC2626", color: "white" },
