@@ -336,7 +336,6 @@ const Document = ({
                   });
 
                   setTimeout(() => {
-                    router.refresh();
                   }, 2500);
                 } catch (error) {
                   console.error("Error deleting document:", error);

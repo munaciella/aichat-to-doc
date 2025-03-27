@@ -89,7 +89,6 @@ const FileUploader = () => {
       
         // ⏳ Give backend time to sync, then redirect
         setTimeout(() => {
-          router.push("/dashboard");
         }, 2500); // adjust if needed
       } catch (error) {
         console.error("Upload error:", error);
