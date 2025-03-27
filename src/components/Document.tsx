@@ -335,6 +335,7 @@ const Document = ({
                     style: { backgroundColor: "#16A34A", color: "white" },
                   });
 
+                  // ⏳ Give backend time to sync
                   setTimeout(() => {
                   }, 2500);
                 } catch (error) {

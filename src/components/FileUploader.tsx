@@ -43,6 +43,15 @@ const FileUploader = () => {
         return;
       }
 
+      // ✅ Rough check: warn if file is larger than ~3MB (approx. 25+ pages)
+    if (file.size > 3 * 1024 * 1024) {
+      toast.warning("This file might be too large to process correctly.", {
+        description: "For best results, try documents under 25 pages.",
+        duration: 6000,
+        style: { backgroundColor: "#EAB308", color: "white" },
+      });
+    }
+
       // ✅ Check if user is over free plan limit **before upload**
       if (isOverFileLimit) {
         toast.error("Free plan file limit reached.", {
