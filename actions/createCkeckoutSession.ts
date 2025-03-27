@@ -34,11 +34,12 @@ export async function createCheckoutSession(userDetails: UserDetails) {
     stripeCustomerId = customer.id;
   }
 
+  // TODO: test priceId: price_1R3IsnBMl1fziMK5iAqbXOVm
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: [
       {
-        price: "price_1R3IsnBMl1fziMK5iAqbXOVm",
+        price: "price_1R7J3oBMl1fziMK56651VXC5",
         quantity: 1,
       },
     ],
