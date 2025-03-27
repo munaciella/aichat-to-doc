@@ -58,13 +58,13 @@ const Footer = () => {
                   Privacy Policy
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="/cookies" className="hover:underline underline-offset-4 hover:text-indigo-500 transition">
                   Cookie Policy
                 </Link>
-              </li>
+              </li> */}
               <li>
-                <Link href="mailto:support@paperly.app" className="hover:underline underline-offset-4 hover:text-indigo-500 transition">
+                <Link href="mailto:francesco.vurchio82@gmail.com" className="hover:underline underline-offset-4 hover:text-indigo-500 transition">
                   Contact Us
                 </Link>
               </li>
