@@ -334,10 +334,6 @@ const Document = ({
                   toast.success("Document deleted successfully.", {
                     style: { backgroundColor: "#16A34A", color: "white" },
                   });
-
-                  // ⏳ Give backend time to sync
-                  setTimeout(() => {
-                  }, 2500);
                 } catch (error) {
                   console.error("Error deleting document:", error);
                   toast.error("Failed to delete document. Please try again.", {
