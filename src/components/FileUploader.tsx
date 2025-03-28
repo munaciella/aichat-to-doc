@@ -32,6 +32,66 @@ const FileUploader = () => {
     setRefreshTrigger((prev) => prev + 1);
   }, [progress]);
 
+  // const onDrop = useCallback(
+  //   async (acceptedFiles: File[]) => {
+  //     const file = acceptedFiles[0];
+  
+  //     if (!file) {
+  //       toast.warning("Please select a valid file.", {
+  //         style: { backgroundColor: "#EAB308", color: "white" },
+  //       });
+  //       return;
+  //     }
+  
+  //     // ✅ Check if user is over free plan limit **before upload**
+  //     if (isOverFileLimit) {
+  //       toast.error("Free plan file limit reached.", {
+  //         style: { backgroundColor: "#DC2626", color: "white" },
+  //         duration: 5000,
+  //         description: "Please upgrade to upload more files.",
+  //         action: {
+  //           label: "Upgrade",
+  //           onClick: () => {
+  //             router.push("/dashboard/upgrade");
+  //           },
+  //         },
+  //       });
+  //       return;
+  //     }
+  
+  //     // ✅ Check for file size (applies to all types)
+  //     if (file.size > 450 * 1024) {
+  //       toast.warning("This file is too large (max 450KB).", {
+  //         description: "Support for larger documents is coming soon.",
+  //         style: { backgroundColor: "#EAB308", color: "white" },
+  //       });
+  //       return;
+  //     }
+  
+  //     // ✅ Show loading toast
+  //     const toastId = toast.loading(`Uploading ${file.name}...`, {
+  //       style: { backgroundColor: "#2563EB", color: "white" },
+  //     });
+  
+  //     try {
+  //       await handleUpload(file);
+  
+  //       toast.success(`${file.name} uploaded successfully!`, {
+  //         id: toastId,
+  //         style: { backgroundColor: "#16A34A", color: "white" },
+  //       });
+  //     } catch (error) {
+  //       console.error("Upload error:", error);
+  
+  //       toast.error(`Failed to upload ${file.name}. Please try again.`, {
+  //         id: toastId,
+  //         style: { backgroundColor: "#DC2626", color: "white" },
+  //       });
+  //     }
+  //   },
+  //   [handleUpload, isOverFileLimit, router]
+  // );
+
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
@@ -43,7 +103,6 @@ const FileUploader = () => {
         return;
       }
   
-      // ✅ Check if user is over free plan limit **before upload**
       if (isOverFileLimit) {
         toast.error("Free plan file limit reached.", {
           style: { backgroundColor: "#DC2626", color: "white" },
@@ -59,16 +118,37 @@ const FileUploader = () => {
         return;
       }
   
-      // ✅ Check for file size (applies to all types)
-      if (file.size > 450 * 1024) {
-        toast.warning("This file is too large (max 450KB).", {
-          description: "Support for larger documents is coming soon.",
+      // ✅ Reject files over 5MB (5 * 1024 * 1024)
+      if (file.size > 5 * 1024 * 1024) {
+        toast.warning("File is too large (max 5MB)", {
+          description: "Support for larger files coming soon.",
           style: { backgroundColor: "#EAB308", color: "white" },
         });
         return;
       }
   
-      // ✅ Show loading toast
+      // ✅ Check PDF page count if applicable
+      if (file.type === "application/pdf") {
+        try {
+          const pdfjsLib = await import("pdfjs-dist");
+          const arrayBuffer = await file.arrayBuffer();
+          const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  
+          if (pdf.numPages > 15) {
+            toast.warning("PDFs must be 15 pages or fewer.", {
+              description: "Support for longer documents coming soon.",
+              style: { backgroundColor: "#EAB308", color: "white" },
+            });
+            return;
+          }
+        } catch (err) {
+          console.error("PDF page count check failed:", err);
+          toast.warning("Couldn't check PDF pages. Upload may fail if too large.", {
+            style: { backgroundColor: "#EAB308", color: "white" },
+          });
+        }
+      }
+  
       const toastId = toast.loading(`Uploading ${file.name}...`, {
         style: { backgroundColor: "#2563EB", color: "white" },
       });
@@ -82,7 +162,6 @@ const FileUploader = () => {
         });
       } catch (error) {
         console.error("Upload error:", error);
-  
         toast.error(`Failed to upload ${file.name}. Please try again.`, {
           id: toastId,
           style: { backgroundColor: "#DC2626", color: "white" },
@@ -90,7 +169,7 @@ const FileUploader = () => {
       }
     },
     [handleUpload, isOverFileLimit, router]
-  );
+  );  
   
   const statusIcons: {
     [key in StatusText]: JSX.Element;
