@@ -131,9 +131,15 @@ const FileUploader = () => {
       if (file.type === "application/pdf") {
         try {
           const pdfjsLib = await import("pdfjs-dist");
+          const pdfjsWorker = await import("pdfjs-dist/build/pdf.worker.js");
+      
+          pdfjsLib.GlobalWorkerOptions.workerSrc = URL.createObjectURL(
+            new Blob([pdfjsWorker.default], { type: "text/javascript" })
+          );
+      
           const arrayBuffer = await file.arrayBuffer();
           const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-  
+      
           if (pdf.numPages > 15) {
             toast.warning("PDFs must be 15 pages or fewer.", {
               description: "Support for longer documents coming soon.",
@@ -143,11 +149,11 @@ const FileUploader = () => {
           }
         } catch (err) {
           console.error("PDF page count check failed:", err);
-          toast.warning("Couldn't check PDF pages. Upload may fail if too large.", {
+          toast.warning("Couldn't check PDF pages. Upload may fail if too long.", {
             style: { backgroundColor: "#EAB308", color: "white" },
           });
         }
-      }
+      }      
   
       const toastId = toast.loading(`Uploading ${file.name}...`, {
         style: { backgroundColor: "#2563EB", color: "white" },
