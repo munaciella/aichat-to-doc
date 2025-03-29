@@ -177,7 +177,7 @@ npm run dev
 ---
 
 ## 📄 License
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+This project is licensed under the [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](#license).
 
 ---
 
