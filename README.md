@@ -6,7 +6,6 @@
 ---
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Vercel](https://vercel.com/button)
 ![Next.js](https://img.shields.io/badge/Next.js-000?logo=next.js&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178c6?logo=typescript&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-38bdf8?logo=tailwind-css&logoColor=white)
