@@ -1,26 +1,26 @@
 # 📄 Paperly – AI Chat to Your Documents
 
-[**Live Site:**](https://paperly.dev)  
-[**Repository:**](https://github.com/munaciella/aichat-to-doc)
+[**Live Site**](https://paperly.dev)  
+[**Repository**](https://github.com/munaciella/aichat-to-doc)
 
 ---
 
 ## 🧭 Table of Contents
 
-- [Overview](#overview)
-- [Tech Stack](#tech-stack)
-- [Features](#features)
-- [Installation](#installation)
-- [Environment Variables](#environment-variables)
-- [Folder Structure](#folder-structure)
-- [Usage](#usage)
-- [Authentication](#authentication)
-- [Subscriptions & Payments](#subscriptions-payments)
-- [AI Chat & Embeddings](#ai-chat-embeddings)
-- [File Management](#file-management)
-- [Deployment](#deployment)
-- [Upcoming Features](#upcoming-features)
-- [License](#license)
+- [💡 Overview](#-overview)
+- [🔧 Tech Stack](#-tech-stack)
+- [🚀 Features](#-features)
+- [🛠 Installation](#-installation)
+- [🔐 Environment Variables](#-environment-variables)
+- [🗂 Folder Structure](#-folder-structure)
+- [🧪 Usage](#-usage)
+- [🔑 Authentication](#-authentication)
+- [💳 Subscriptions & Payments](#-subscriptions-payments)
+- [🧠 AI Chat & Embeddings](#-ai-chat-embeddings)
+- [📂 File Management](#-file-management)
+- [🌍 Deployment](#-deployment)
+- [🔮 Upcoming Features](#-upcoming-features)
+- [📄 License](#-license)
 
 ---
 
@@ -179,3 +179,6 @@ npm run dev
 ## 📄 License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
+---
+
+📢 **Made with ❤️ by [Francesco.dev](https://francescovurchio-dev.netlify.app/)**
