@@ -5,6 +5,22 @@
 
 ---
 
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Vercel](https://vercel.com/button)
+![Next.js](https://img.shields.io/badge/Next.js-000?logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178c6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-38bdf8?logo=tailwind-css&logoColor=white)
+![Shadcn/ui](https://img.shields.io/badge/shadcn/ui-e5e7eb)
+![DaisyUI](https://img.shields.io/badge/DaisyUI-%2390cdf4)
+![Firebase](https://img.shields.io/badge/Firebase-ffca28?logo=firebase&logoColor=black)
+![Clerk](https://img.shields.io/badge/Clerk-blueviolet)
+![Stripe](https://img.shields.io/badge/Stripe-008cdd?logo=stripe&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-412991?logo=openai&logoColor=white)
+![LangChain](https://img.shields.io/badge/LangChain-00b894)
+![Pinecone](https://img.shields.io/badge/Pinecone-3d4ef4)
+
+---
+
 ## 🧭 Table of Contents
 
 - [💡 Overview](#-overview)
@@ -177,7 +193,7 @@ npm run dev
 ---
 
 ## 📄 License
-This project is licensed under the [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](#license).
+This project is licensed under the [MIT License](/LICENSE).
 
 ---
 
