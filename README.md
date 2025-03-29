@@ -1,11 +1,12 @@
 # 📄 Paperly – AI Chat to Your Documents
 
-**Live Site:** [https://paperly.dev](https://paperly.dev)  
-**Repository:** [GitHub - munaciella/aichat-to-doc](https://github.com/munaciella/aichat-to-doc)
+[**Live Site:**](https://paperly.dev)  
+[**Repository:**](https://github.com/munaciella/aichat-to-doc)
 
 ---
 
 ## 🧭 Table of Contents
+
 - [Overview](#overview)
 - [Tech Stack](#tech-stack)
 - [Features](#features)
@@ -14,8 +15,8 @@
 - [Folder Structure](#folder-structure)
 - [Usage](#usage)
 - [Authentication](#authentication)
-- [Subscriptions & Payments](#subscriptions--payments)
-- [AI Chat & Embeddings](#ai-chat--embeddings)
+- [Subscriptions & Payments](#subscriptions-payments)
+- [AI Chat & Embeddings](#ai-chat-embeddings)
 - [File Management](#file-management)
 - [Deployment](#deployment)
 - [Upcoming Features](#upcoming-features)
