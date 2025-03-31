@@ -5,11 +5,7 @@
     "noEmitOnError": true, // Prevents emitting JS files if TypeScript errors exist
     "ignoreDeprecations": "5.0", // Ignores old TypeScript deprecations
     "target": "ES2020",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true, // Avoids conflicts in node_modules
     "noUncheckedIndexedAccess": true, // Improves array/obj safety
@@ -18,10 +14,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "types": [
-      "react",
-      "react-dom"
-    ],
+    "types": ["react", "react-dom", "jest"],
     "jsx": "preserve",
     "incremental": true,
     "plugins": [
@@ -30,9 +23,7 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     },
     "noEmit": true
   },
@@ -41,9 +32,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "tailwind.config.js"
+    "tailwind.config.js",
+    "jest.setup.ts",
+    "jest.config.js"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
