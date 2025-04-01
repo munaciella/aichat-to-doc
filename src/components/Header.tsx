@@ -48,7 +48,15 @@ import { Button } from "./ui/button";
 import { FilePlus2, Menu } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import UpgradeButton from "./UpgradeButton";
-import { Sheet, SheetTrigger, SheetContent, SheetClose } from "./ui/sheet";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetClose,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "./ui/sheet";
 import logo from "../../public/paperly.png";
 import Image from "next/image";
 
@@ -64,6 +72,14 @@ const Header = () => {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-64 py-16 px-2">
+
+            <SheetHeader>
+              <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+              <SheetDescription className="sr-only">
+                Access links to dashboard sections
+              </SheetDescription>
+            </SheetHeader>
+
             <div className="flex flex-col space-y-4">
               <SheetClose asChild>
                 <Button asChild variant="ghost">
@@ -109,7 +125,7 @@ const Header = () => {
 >
   <span className="text-indigo-600 dark:text-indigo-400">Paperly</span>
 </Link> */}
-      <div className="flex-1 flex flex-col items-center md:items-start md:ml-6">
+      <div className="flex-1 flex flex-col items-center ml-10 md:items-start md:ml-6">
         <Link href="/" className="flex flex-col items-center md:items-start">
           <Image
             src={logo}
