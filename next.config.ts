@@ -6,7 +6,8 @@ const nextConfig: NextConfig = {
     return config;
   },
   typescript: {
-    ignoreBuildErrors: true, // Forces build even if TypeScript errors exist - temp fix
+    // TODO ⚠️ Temporarily ignoring TS build errors due to Next.js false positives with dynamic route params
+    ignoreBuildErrors: true,
   },
   images: {
     remotePatterns: [
