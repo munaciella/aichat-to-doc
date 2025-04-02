@@ -6,10 +6,11 @@ module.exports = {
     "^.+\\.(ts|tsx)$": [
       "ts-jest",
       {
-        useESM: false, // Important to avoid ESM issues
+        useESM: false,
         tsconfig: "tsconfig.jest.json",
       },
     ],
+    "^.+\\.mjs$": "ts-jest",
   },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
@@ -18,4 +19,5 @@ module.exports = {
   },
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   testPathIgnorePatterns: ["/node_modules/", "/.next/"],
+  transformIgnorePatterns: ['/node_modules/(?!(@clerk|uuid)/)'],
 };
