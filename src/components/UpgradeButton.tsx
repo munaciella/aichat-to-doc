@@ -32,7 +32,7 @@ const UpgradeButton = () => {
     if (loading)
         return (
     <Button variant="default" className="border-indigo-600 dark:border-indigo-400">
-        <Loader2Icon className="animate-spin" />
+        <Loader2Icon className="animate-spin" data-testid="loader" />
     </Button>
     )
 
@@ -44,7 +44,7 @@ const UpgradeButton = () => {
     className="border-indigo-600 bg-indigo-600 dark:border-indigo-400 dark:bg-indigo-400 cursor-pointer hover:bg-indigo-700 dark:hover:bg-indigo-500"
     >
         {isPending ? (
-            <Loader2Icon className="animate-spin" />
+            <Loader2Icon className="animate-spin" data-testid="loader" />
         ) : (
             <p>
                 <span className="font-extrabold">PRO</span>{" "}
