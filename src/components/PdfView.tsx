@@ -68,6 +68,7 @@ const PdfView = ({ url }: { url: string }) => {
             variant="outline"
             onClick={() => setRotation((rotation + 90) % 360)}
             className="dark:border-gray-500 dark:text-gray-300 hover:dark:bg-gray-700"
+            aria-label="Rotate"
           >
             <RotateCw />
           </Button>
@@ -77,6 +78,7 @@ const PdfView = ({ url }: { url: string }) => {
             disabled={scale >= 1.5}
             onClick={() => setScale(scale * 1.2)}
             className="dark:border-gray-500 dark:text-gray-300 hover:dark:bg-gray-700"
+            aria-label="Zoom in"
           >
             <ZoomInIcon />
           </Button>
@@ -86,6 +88,7 @@ const PdfView = ({ url }: { url: string }) => {
             disabled={scale <= 0.75}
             onClick={() => setScale(scale / 1.2)}
             className="dark:border-gray-500 dark:text-gray-300 hover:dark:bg-gray-700"
+            aria-label="Zoom out"
           >
             <ZoomOutIcon />
           </Button>
