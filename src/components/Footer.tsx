@@ -80,6 +80,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition"
+                aria-label="GitHub"
               >
                 <FaGithub size={26} className="hover:scale-110 transition-transform" />
               </a>
@@ -88,6 +89,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-500 transition"
+                aria-label="LinkedIn"
               >
                 <FaLinkedin size={26} className="hover:scale-110 transition-transform" />
               </a>

@@ -44,10 +44,12 @@ const ChatMessagePage = ({ message }: { message: Message }) => {
       >
         {message.message === "Thinking..." ? (
           <div className="flex items-center justify-center">
-            <Loader2Icon className="animate-spin h-5 w-5 text-white dark:text-gray-300" />
+            <Loader2Icon 
+            data-testid="spinner"
+            className="animate-spin h-5 w-5 text-white dark:text-gray-300" />
           </div>
         ) : (
-          <Markdown>{message.message}</Markdown>
+          <Markdown data-testid="markdown-message">{message.message}</Markdown>
         )}
       </div>
     </div>
