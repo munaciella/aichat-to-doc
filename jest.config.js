@@ -29,6 +29,6 @@ module.exports = {
 
   // ✅ Tell Jest to transform these normally even though they're in node_modules
   transformIgnorePatterns: [
-    '/node_modules/(?!(@clerk|uuid|react-pdf|pdfjs-dist)/)'
-  ],
+    '/node_modules/(?!(@clerk|uuid|react-pdf|pdfjs-dist|react-markdown)/)'
+  ],  
 };
