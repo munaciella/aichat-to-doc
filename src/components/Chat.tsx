@@ -150,7 +150,9 @@ const Chat = ({ id }: { id: string }) => {
 
         {loading ? (
           <div className="flex items-center justify-center">
-            <Loader2Icon className="animate-spin h-14 w-14 md:h-20 md:w-20 lg:h-20 lg:w-20 text-indigo-600 dark:text-indigo-400 mt-28" />
+            <Loader2Icon 
+            data-testid="chat-loader"
+            className="animate-spin h-14 w-14 md:h-20 md:w-20 lg:h-20 lg:w-20 text-indigo-600 dark:text-indigo-400 mt-28" />
           </div>
         ) : (
           <div className="p-5">
@@ -187,7 +189,9 @@ const Chat = ({ id }: { id: string }) => {
 
         <Button type="submit" disabled={!input || isPending}>
           {isPending ? (
-            <Loader2Icon className="animate-spin text-indigo-600 dark:text-indigo-400" />
+            <Loader2Icon 
+            data-testid="chat-loader"
+            className="animate-spin text-indigo-600 dark:text-indigo-400" />
           ) : (
             "Ask"
           )}
