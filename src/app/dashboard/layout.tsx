@@ -1,3 +1,4 @@
+import CookieBanner from "@/components/CookieBanner";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { ClerkLoaded } from "@clerk/nextjs";
@@ -11,6 +12,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         <main className="flex-1 flex-grow pb-52">
         {children}
         </main>
+        <CookieBanner />
         <Footer />
         </div>
     </ClerkLoaded>
