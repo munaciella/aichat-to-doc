@@ -32,66 +32,6 @@ const FileUploader = () => {
     setRefreshTrigger((prev) => prev + 1);
   }, [progress]);
 
-  // const onDrop = useCallback(
-  //   async (acceptedFiles: File[]) => {
-  //     const file = acceptedFiles[0];
-  
-  //     if (!file) {
-  //       toast.warning("Please select a valid file.", {
-  //         style: { backgroundColor: "#EAB308", color: "white" },
-  //       });
-  //       return;
-  //     }
-  
-  //     // ✅ Check if user is over free plan limit **before upload**
-  //     if (isOverFileLimit) {
-  //       toast.error("Free plan file limit reached.", {
-  //         style: { backgroundColor: "#DC2626", color: "white" },
-  //         duration: 5000,
-  //         description: "Please upgrade to upload more files.",
-  //         action: {
-  //           label: "Upgrade",
-  //           onClick: () => {
-  //             router.push("/dashboard/upgrade");
-  //           },
-  //         },
-  //       });
-  //       return;
-  //     }
-  
-  //     // ✅ Check for file size (applies to all types)
-  //     if (file.size > 450 * 1024) {
-  //       toast.warning("This file is too large (max 450KB).", {
-  //         description: "Support for larger documents is coming soon.",
-  //         style: { backgroundColor: "#EAB308", color: "white" },
-  //       });
-  //       return;
-  //     }
-  
-  //     // ✅ Show loading toast
-  //     const toastId = toast.loading(`Uploading ${file.name}...`, {
-  //       style: { backgroundColor: "#2563EB", color: "white" },
-  //     });
-  
-  //     try {
-  //       await handleUpload(file);
-  
-  //       toast.success(`${file.name} uploaded successfully!`, {
-  //         id: toastId,
-  //         style: { backgroundColor: "#16A34A", color: "white" },
-  //       });
-  //     } catch (error) {
-  //       console.error("Upload error:", error);
-  
-  //       toast.error(`Failed to upload ${file.name}. Please try again.`, {
-  //         id: toastId,
-  //         style: { backgroundColor: "#DC2626", color: "white" },
-  //       });
-  //     }
-  //   },
-  //   [handleUpload, isOverFileLimit, router]
-  // );
-
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
@@ -180,8 +120,6 @@ const FileUploader = () => {
       },
     });
 
-  //const uploadInProgress = progress !== null && progress >= 0 && progress <= 100;
-
   const isUploading = status === StatusText.UPLOADING;
   const showStatus = status !== StatusText.UPLOADING && status !== null;
 
@@ -189,49 +127,6 @@ const FileUploader = () => {
     <div className="flex flex-col gap-4 items-center max-w-7xl mx-auto cursor-pointer">
       {isUploading && (
         <div className="mt-32 flex flex-col justify-center items-center gap-5">
-          {/* <div
-            className={`radial-progress bg-indigo-300 text-white border-indigo-600 border-4 ${
-              progress === 100 ? "hidden" : ""
-            }`}
-            role="progressbar"
-            style={
-              {
-                "--value": progress || 0,
-                "--size": "12rem",
-                "--thickness": "1.3rem",
-              } as React.CSSProperties
-            } // ✅ Fix: Ensure React recognizes CSS properties
-          >
-            {progress} %
-          </div> */}
-
-          {/* <div
-            key={refreshTrigger} // ✅ This forces a React re-render when progress changes
-            className={`radial-progress bg-indigo-300 text-white border-indigo-600 border-4 ${
-              progress === 100 ? "hidden" : ""
-            }`}
-            role="progressbar"
-            style={
-              {
-                "--value": progress ?? 0, // ✅ Ensure a valid number
-                "--size": "12rem",
-                "--thickness": "1.3rem",
-              } as React.CSSProperties
-            }
-          >
-            {progress} %
-          </div>
-
-          {
-            // @ts-expect-error daily-ui bug
-            statusIcons[status!]
-          }
-
-          <p className="text-indigo-600 animate-pulse">
-            {status !== null ? status.toString() : ""}
-          </p>
-        </div>
-      )} */}
 
           {progress !== null && (
             <div

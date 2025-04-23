@@ -1,45 +1,3 @@
-// import { SignedIn, UserButton } from "@clerk/nextjs";
-// import Link from "next/link";
-// import { Button } from "./ui/button";
-// import { FilePlus2 } from "lucide-react";
-// import { ThemeToggle } from "./ThemeToggle";
-// import UpgradeButton from "./UpgradeButton";
-
-// const Header = () => {
-//   return (
-//     <div className="flex justify-between bg-white dark:bg-gray-900 shadow-sm dark:shadow-md p-5 border-b dark:border-gray-700">
-//       <Link href="/" className="text-2xl font-semibold text-gray-900 dark:text-white">
-//         <span className="text-indigo-600 dark:text-indigo-400">Paperly</span>
-//       </Link>
-
-//       <SignedIn>
-//         <div className="flex items-center space-x-2">
-//           <Button asChild variant="link" className="hidden md:flex text-gray-900 dark:text-gray-300">
-//             <Link href="/dashboard/upgrade">Pricing</Link>
-//           </Button>
-
-//           <Button asChild variant="outline" className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-300">
-//             <Link href="/dashboard">My Documents</Link>
-//           </Button>
-
-//           <Button asChild variant="outline" className="border-indigo-600 dark:border-indigo-400">
-//             <Link href="/dashboard/upload">
-//               <FilePlus2 className="text-indigo-600 dark:text-indigo-400" />
-//             </Link>
-//           </Button>
-
-//           <UpgradeButton />
-//           <UserButton />
-
-//           <ThemeToggle />
-//         </div>
-//       </SignedIn>
-//     </div>
-//   );
-// };
-
-// export default Header;
-
 "use client";
 
 import { SignedIn, UserButton } from "@clerk/nextjs";
@@ -117,14 +75,6 @@ const Header = () => {
         </Sheet>
       </div>
 
-      {/* ✅ Centered Logo + "Paperly" (SM+ Screens) */}
-      {/* <Link
-  href="/"
-  className="text-2xl font-semibold text-gray-900 dark:text-white flex-1 text-center 
-     md:text-left md:ml-8"
->
-  <span className="text-indigo-600 dark:text-indigo-400">Paperly</span>
-</Link> */}
       <div className="flex-1 flex flex-col items-center ml-10 md:items-start md:ml-6">
         <Link href="/" className="flex flex-col items-center md:items-start">
           <Image

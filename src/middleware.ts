@@ -37,12 +37,10 @@ const blockedPaths = [
 export default clerkMiddleware(async (auth, req) => {
   const url = req.nextUrl.pathname;
 
-  // Block known bot/suspicious paths
   if (blockedPaths.some((path) => url.startsWith(path))) {
     return new NextResponse("Blocked", { status: 403 });
   }
 
-  // Protect dashboard
   if (isProtectedRoute(req)) {
     await auth.protect();
   }
@@ -50,9 +48,7 @@ export default clerkMiddleware(async (auth, req) => {
 
 export const config = {
   matcher: [
-    // Match all routes except Next internals/static files
     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    // Always run for API routes
     '/(api|trpc)(.*)',
   ],
 };
