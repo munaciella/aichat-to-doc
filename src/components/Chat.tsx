@@ -55,7 +55,7 @@ const Chat = ({ id }: { id: string }) => {
     const lastMessage = messages.pop();
 
     if (lastMessage?.role === "ai" && lastMessage.message === "Thinking...") {
-      return; // Placeholder message, do nothing
+      return;
     }
 
     const newMessages = snapshot.docs.map((doc) => {

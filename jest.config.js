@@ -10,7 +10,7 @@ module.exports = {
         tsconfig: "tsconfig.jest.json",
       },
     ],
-    "^.+\\.mjs$": "ts-jest", // needed for ESM packages
+    "^.+\\.mjs$": "ts-jest",
   },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
@@ -27,7 +27,6 @@ module.exports = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   testPathIgnorePatterns: ["/node_modules/", "/.next/"],
 
-  // ✅ Tell Jest to transform these normally even though they're in node_modules
   transformIgnorePatterns: [
     '/node_modules/(?!(@clerk|uuid|react-pdf|pdfjs-dist|react-markdown)/)'
   ],  
