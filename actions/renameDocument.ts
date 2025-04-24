@@ -14,7 +14,7 @@ export async function renameDocument(docId: string, newName: string) {
   console.log(`--- Renaming document ${docId} to ${newName}... ---`);
 
   try {
-    // ✅ Update the document name in Firestore
+    // Update the document name in Firestore
     await adminDb
       .collection("users")
       .doc(userId!)
@@ -24,7 +24,7 @@ export async function renameDocument(docId: string, newName: string) {
 
     console.log(`--- Document ${docId} renamed successfully ---`);
 
-    // ✅ Revalidate the cache to reflect the new name in UI
+    // Revalidate the cache to reflect the new name in UI
     revalidatePath("/dashboard");
 
     return { success: true };

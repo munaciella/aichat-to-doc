@@ -24,7 +24,6 @@ describe("DashboardClient", () => {
   
     render(<DashboardClient />);
   
-    // Fast-forward timers
     jest.runAllTimers();
   
     expect(toast.success).toHaveBeenCalledWith("Signed in successfully!", {
