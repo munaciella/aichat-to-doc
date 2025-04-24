@@ -13,13 +13,12 @@ import {
 import useUpload, { StatusText } from "../../hooks/useUpload";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-//import useSubscription from "../../hooks/useSubscription";
-import { useSubscriptionContext as useSubscription } from "../app/context/SubscriptionContext";
+import useSubscription from "../../hooks/useSubscription";
 
 
 const FileUploader = () => {
   const { progress, status, fileId, handleUpload } = useUpload();
-  const { isOverFileLimit, refetchLimit } = useSubscription();
+  const { isOverFileLimit } = useSubscription();
   const router = useRouter();
 
   const [refreshTrigger, setRefreshTrigger] = useState(0);
@@ -72,26 +71,56 @@ const FileUploader = () => {
         style: { backgroundColor: "#2563EB", color: "white" },
       });
 
+      // try {
+      //   await handleUpload(file);
+
+      //   toast.success(`${file.name} uploaded successfully!`, {
+      //     id: toastId,
+      //     style: { backgroundColor: "#16A34A", color: "white" },
+      //   });
+      // } catch (error) {
+      //   console.error("Upload error:", error);
+      //   if (error instanceof Error && error.message?.includes("Upload limit reached")) {
+      //     // 👇 Immediately trigger refetch to update UI
+      //     refetchLimit?.();
+      //     router.refresh();
+      //   }        toast.error(`Failed to upload ${file.name}. Please try again.`, {
+      //     id: toastId,
+      //     style: { backgroundColor: "#DC2626", color: "white" },
+      //   });
+      // }
       try {
         await handleUpload(file);
-
+      
         toast.success(`${file.name} uploaded successfully!`, {
           id: toastId,
           style: { backgroundColor: "#16A34A", color: "white" },
         });
       } catch (error) {
         console.error("Upload error:", error);
-        if (error instanceof Error && error.message?.includes("Upload limit reached")) {
-          // 👇 Immediately trigger refetch to update UI
-          refetchLimit?.();
-          router.refresh();
-        }        toast.error(`Failed to upload ${file.name}. Please try again.`, {
+      
+        // if it's the limit error, show a special toast and bail
+        if (error instanceof Error && error.message.includes("Upload limit reached")) {
+          toast.error("Free plan file limit reached. Upgrade to upload more files.", {
+            id: toastId,
+            style: { backgroundColor: "#DC2626", color: "white" },
+            duration: 5000,
+            action: {
+              label: "Upgrade",
+              onClick: () => router.push("/dashboard/upgrade"),
+            },
+          });
+          return; // don’t fall through to the generic error toast
+        }
+      
+        // fallback for any other upload errors
+        toast.error(`Failed to upload ${file.name}. Please try again.`, {
           id: toastId,
           style: { backgroundColor: "#DC2626", color: "white" },
         });
       }
     },
-    [handleUpload, isOverFileLimit, refetchLimit, router]
+    [handleUpload, isOverFileLimit, router]
   );
 
   const statusIcons: {
