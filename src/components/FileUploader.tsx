@@ -17,7 +17,7 @@ import useSubscription from "../../hooks/useSubscription";
 
 const FileUploader = () => {
   const { progress, status, fileId, handleUpload } = useUpload();
-  const { isOverFileLimit } = useSubscription();
+  const { isOverFileLimit, refetchLimit } = useSubscription();
   const router = useRouter();
 
   const [refreshTrigger, setRefreshTrigger] = useState(0);
@@ -72,6 +72,7 @@ const FileUploader = () => {
   
       try {
         await handleUpload(file);
+        refetchLimit();
   
         toast.success(`${file.name} uploaded successfully!`, {
           id: toastId,
@@ -85,7 +86,7 @@ const FileUploader = () => {
         });
       }
     },
-    [handleUpload, isOverFileLimit, router]
+    [handleUpload, isOverFileLimit, refetchLimit, router]
   );  
   
   const statusIcons: {

@@ -50,7 +50,16 @@ const useSubscription = () => {
     setIsOverFileLimit(files.length >= usersLimit);
   }, [filesSnapshot, hasActiveMembership]);
 
-  return { hasActiveMembership, loading, error, isOverFileLimit, filesLoading };
+  return { hasActiveMembership, loading, error, isOverFileLimit, filesLoading,
+    refetchLimit: () => {
+      if (!filesSnapshot || hasActiveMembership === null) return;
+  
+      const files = filesSnapshot.docs;
+      const usersLimit = hasActiveMembership ? PRO_LIMIT : FREE_LIMIT;
+  
+      setIsOverFileLimit(files.length >= usersLimit);
+    }
+   };
 };
 
 export default useSubscription;
