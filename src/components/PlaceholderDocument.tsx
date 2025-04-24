@@ -6,10 +6,22 @@ import { useRouter } from "next/navigation";
 import useSubscription from "../../hooks/useSubscription";
 
 const PlaceholderDocument = () => {
-  const { isOverFileLimit } = useSubscription();
+  //const { isOverFileLimit } = useSubscription();
+  const { isOverFileLimit, filesLoading, loading } = useSubscription();
   const router = useRouter();
 
+  // const handleClick = () => {
+  //   if (isOverFileLimit) {
+  //     router.push("/dashboard/upgrade");
+  //   } else {
+  //     router.push("/dashboard/upload");
+  //   }
+  // };
+
   const handleClick = () => {
+    // Prevent navigation until data is ready
+    if (filesLoading || loading) return;
+  
     if (isOverFileLimit) {
       router.push("/dashboard/upgrade");
     } else {
@@ -19,6 +31,7 @@ const PlaceholderDocument = () => {
   return (
     <Button
       onClick={handleClick}
+      disabled={filesLoading || loading}
       className="flex flex-col items-center justify-center w-36 h-48 lg:w-60 lg:h-72 rounded-xl bg-gray-200 drop-shadow-md text-gray-400 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600 cursor-pointer"
     >
       {/* ✅ Increased Icon Size for Visibility */}
