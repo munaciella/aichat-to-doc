@@ -72,8 +72,7 @@ const FileUploader = () => {
   
       try {
         await handleUpload(file);
-        refetchLimit();
-  
+        
         toast.success(`${file.name} uploaded successfully!`, {
           id: toastId,
           style: { backgroundColor: "#16A34A", color: "white" },
@@ -84,6 +83,8 @@ const FileUploader = () => {
           id: toastId,
           style: { backgroundColor: "#DC2626", color: "white" },
         });
+        
+        refetchLimit();
       }
     },
     [handleUpload, isOverFileLimit, refetchLimit, router]
