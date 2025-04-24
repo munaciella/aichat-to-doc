@@ -35,14 +35,14 @@ const FileUploader = () => {
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
-  
+
       if (!file) {
         toast.warning("Please select a valid file.", {
           style: { backgroundColor: "#EAB308", color: "white" },
         });
         return;
       }
-  
+
       if (isOverFileLimit) {
         toast.error("Free plan file limit reached.", {
           style: { backgroundColor: "#DC2626", color: "white" },
@@ -57,39 +57,38 @@ const FileUploader = () => {
         });
         return;
       }
-  
+
       if (file.size > 3 * 1024 * 1024) {
         toast.warning("File is too large (max 3MB)", {
           description: "Support for larger files coming soon.",
           style: { backgroundColor: "#EAB308", color: "white" },
         });
         return;
-      }      
-  
+      }
+
       const toastId = toast.loading(`Uploading ${file.name}...`, {
         style: { backgroundColor: "#2563EB", color: "white" },
       });
-  
+
       try {
         await handleUpload(file);
-        
+
         toast.success(`${file.name} uploaded successfully!`, {
           id: toastId,
           style: { backgroundColor: "#16A34A", color: "white" },
         });
       } catch (error) {
         console.error("Upload error:", error);
+        refetchLimit?.();
         toast.error(`Failed to upload ${file.name}. Please try again.`, {
           id: toastId,
           style: { backgroundColor: "#DC2626", color: "white" },
         });
-        
-        refetchLimit();
       }
     },
     [handleUpload, isOverFileLimit, refetchLimit, router]
-  );  
-  
+  );
+
   const statusIcons: {
     [key in StatusText]: JSX.Element;
   } = {
@@ -129,7 +128,6 @@ const FileUploader = () => {
     <div className="flex flex-col gap-4 items-center max-w-7xl mx-auto cursor-pointer">
       {isUploading && (
         <div className="mt-32 flex flex-col justify-center items-center gap-5">
-
           {progress !== null && (
             <div
               key={refreshTrigger}
