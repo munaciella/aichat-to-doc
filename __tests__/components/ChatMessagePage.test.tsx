@@ -86,6 +86,6 @@ describe("ChatMessagePage", () => {
     };
 
     render(<ChatMessagePage message={message} />);
-    expect(screen.getByTestId("spinner")).toBeInTheDocument(); // ✅ Updated
+    expect(screen.getByTestId("spinner")).toBeInTheDocument();
   });
 });

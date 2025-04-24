@@ -57,7 +57,6 @@ export async function askQuestion(id: string, question: string) {
 
       await chatRef.add(userMessage);
 
-      // Generate AI response
       const reply = await generateLangchainCompletion(
         id,
         question

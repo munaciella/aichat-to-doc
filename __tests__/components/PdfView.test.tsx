@@ -2,14 +2,14 @@ import { render, screen, fireEvent, waitFor, act } from "@testing-library/react"
 import PdfView from "@/components/PdfView";
 import { useEffect } from "react";
 
-// ✅ Mock fetch to return a fake PDF blob
+// Mock fetch to return a fake PDF blob
 global.fetch = jest.fn(() =>
   Promise.resolve({
     blob: () => Promise.resolve(new Blob(["dummy content"], { type: "application/pdf" })),
   })
 ) as jest.Mock;
 
-// ✅ Fully mock react-pdf including pdfjs to avoid ESM + worker errors
+// Fully mock react-pdf including pdfjs to avoid ESM + worker errors
 jest.mock("react-pdf", () => ({
   Document: ({
     children,

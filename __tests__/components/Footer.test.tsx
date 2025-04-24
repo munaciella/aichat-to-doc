@@ -2,13 +2,13 @@
 import { render, screen } from "@testing-library/react";
 import Footer from "@/components/Footer";
 
-// 🧪 Mock next/image
+// Mock next/image
 jest.mock("next/image", () => ({
   __esModule: true,
   default: ({ src, alt }: { src: string; alt: string }) => <img src={src} alt={alt} />,
 }));
 
-// 🧪 Mock logo
+// Mock logo
 jest.mock("../../../public/paperly.png", () => "logo.png");
 
 describe("Footer", () => {
