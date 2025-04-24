@@ -82,6 +82,7 @@ const FileUploader = () => {
         if (error instanceof Error && error.message?.includes("Upload limit reached")) {
           // 👇 Immediately trigger refetch to update UI
           refetchLimit?.();
+          router.refresh();
         }        toast.error(`Failed to upload ${file.name}. Please try again.`, {
           id: toastId,
           style: { backgroundColor: "#DC2626", color: "white" },
