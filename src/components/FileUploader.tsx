@@ -13,7 +13,9 @@ import {
 import useUpload, { StatusText } from "../../hooks/useUpload";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import useSubscription from "../../hooks/useSubscription";
+//import useSubscription from "../../hooks/useSubscription";
+import { useSubscriptionContext as useSubscription } from "../app/context/SubscriptionContext";
+
 
 const FileUploader = () => {
   const { progress, status, fileId, handleUpload } = useUpload();

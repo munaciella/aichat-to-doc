@@ -3,7 +3,8 @@
 import { FrownIcon, PlusCircleIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
-import useSubscription from "../../hooks/useSubscription";
+//import useSubscription from "../../hooks/useSubscription";
+import { useSubscriptionContext as useSubscription } from "../app/context/SubscriptionContext";
 
 const PlaceholderDocument = () => {
   //const { isOverFileLimit } = useSubscription();

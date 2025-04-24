@@ -1,11 +1,16 @@
+'use client";'
+
 import CookieBanner from "@/components/CookieBanner";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { ClerkLoaded } from "@clerk/nextjs";
+import { SubscriptionProvider } from "../context/SubscriptionContext";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <ClerkLoaded>
+      <SubscriptionProvider>
+        <Header />
       <div className="flex flex-col min-h-screen">
         <Header />
 
@@ -15,6 +20,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         <CookieBanner />
         <Footer />
         </div>
+      </SubscriptionProvider>
     </ClerkLoaded>
   );
 };
