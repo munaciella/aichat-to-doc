@@ -2,14 +2,13 @@ import { render, screen } from "@testing-library/react";
 import ChatToFilePage from "@/app/dashboard/files/[id]/page";
 import { adminDb as mockAdminDb } from "../../firebaseAdmin";
 
-// ✅ Use the manual mock for Clerk
 jest.mock("@clerk/nextjs/server");
 import { auth as mockAuthRaw } from "@clerk/nextjs/server";
 const mockAuth = mockAuthRaw as unknown as jest.MockedFunction<() => Promise<{ userId: string | null }>>;
 
 
 
-// 🔧 2. Mock Firestore chaining
+// Mock Firestore chaining
 jest.mock("../../firebaseAdmin", () => ({
   adminDb: {
     collection: jest.fn(() => ({
@@ -28,7 +27,7 @@ jest.mock("../../firebaseAdmin", () => ({
   },
 }));
 
-// 🔧 3. Mock components
+// Mock components
 jest.mock("@/components/Chat", () => {
   const Chat = ({ id }: { id: string }) => (
     <div data-testid="chat-component">Chat Component ID: {id}</div>
@@ -45,7 +44,6 @@ jest.mock("@/components/PdfView", () => {
   return PdfView;
 });
 
-// ✅ Your tests
 describe("ChatToFilePage", () => {
   it("renders Chat and PdfView when authenticated", async () => {
     mockAuth.mockResolvedValue({ userId: "user123" });

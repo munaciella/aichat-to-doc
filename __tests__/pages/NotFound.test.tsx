@@ -27,7 +27,6 @@ describe("NotFound Page", () => {
       screen.getByText(/oops! the page you’re looking seems to have been lost in space!/i)
     ).toBeInTheDocument();
 
-    // If your alt text is correct, this should work
     expect(
       screen.getByAltText(/astronaut lost in space/i)
     ).toBeInTheDocument();

@@ -7,7 +7,6 @@ import useSubscription from "../../hooks/useSubscription";
 import { createCheckoutSession } from "../../actions/createCkeckoutSession";
 import { createStripePortal } from "../../actions/createStripePortal";
 
-// Mocks
 jest.mock("@clerk/nextjs", () => ({
   useUser: jest.fn(),
 }));
