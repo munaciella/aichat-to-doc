@@ -5,8 +5,9 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { db, storage } from "../firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { generateEmbeddings } from "../actions/generateEmbeddings";
+import { collection, getDocs } from "firebase/firestore";
 
 export enum StatusText {
   UPLOADING = "Uploading file...",
@@ -27,7 +28,7 @@ const useUpload = () => {
 
   const simulateSmoothProgress = (start: number, end: number) => {
     let currentProgress = start;
-    
+
     const interval = setInterval(() => {
       currentProgress += 10;
       setProgress(currentProgress);
@@ -42,14 +43,16 @@ const useUpload = () => {
     if (!file || !user) return;
 
     const fileIdToUploadTo = uuidv4();
-    const storageRef = ref(storage, `users/${user.id}/files/${fileIdToUploadTo}`);
+    const storageRef = ref(
+      storage,
+      `users/${user.id}/files/${fileIdToUploadTo}`
+    );
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     setProgress(0);
     setStatus(StatusText.UPLOADING);
 
     let hasSimulated = false;
-
 
     uploadTask.on(
       "state_changed",
@@ -58,20 +61,20 @@ const useUpload = () => {
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
 
-    // Only simulate progress if Firebase is skipping updates
-    if (!hasSimulated && percent === 0) {
-      simulateSmoothProgress(0, 100);
-      hasSimulated = true;
-    } else {
-      setProgress(percent);
-    }
+        // Only simulate progress if Firebase is skipping updates
+        if (!hasSimulated && percent === 0) {
+          simulateSmoothProgress(0, 100);
+          hasSimulated = true;
+        } else {
+          setProgress(percent);
+        }
 
-    console.log("Upload Progress:", percent);
-  },
-  (error) => {
-    console.error("Error uploading file: ", error);
-  }
-);
+        console.log("Upload Progress:", percent);
+      },
+      (error) => {
+        console.error("Error uploading file: ", error);
+      }
+    );
 
     // Wait for upload to complete
     await new Promise<void>((resolve) => {
@@ -88,6 +91,19 @@ const useUpload = () => {
 
     await delay(900);
     setStatus(StatusText.SAVING);
+
+    // 🔐 Enforce document limit dynamically (2 or 20)
+    const userDocSnap = await getDoc(doc(db, "users", user.id));
+    const isPro = userDocSnap.exists() && userDocSnap.data()?.hasActiveMembership === true;
+    const MAX_FILES = isPro ? 20 : 2;
+
+    const userFilesRef = collection(db, "users", user.id, "files");
+    const userFilesSnap = await getDocs(userFilesRef);
+
+    if (userFilesSnap.size >= MAX_FILES) {
+      throw new Error("Upload limit reached. Please upgrade to Pro.");
+    }
+
     await setDoc(doc(db, "users", user.id, "files", fileIdToUploadTo), {
       name: file.name,
       size: file.size,
