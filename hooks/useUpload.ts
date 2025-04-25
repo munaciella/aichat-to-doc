@@ -92,7 +92,7 @@ const useUpload = () => {
     await delay(900);
     setStatus(StatusText.SAVING);
 
-    // 🔐 Enforce document limit dynamically (2 or 20)
+    // Enforce document limit dynamically (2 or 20)
     const userDocSnap = await getDoc(doc(db, "users", user.id));
     const isPro = userDocSnap.exists() && userDocSnap.data()?.hasActiveMembership === true;
     const MAX_FILES = isPro ? 20 : 2;

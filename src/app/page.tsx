@@ -59,14 +59,13 @@ export default function Home() {
 
   const handleClick = () => {
     if (isSignedIn) {
-      toast.info("Redirecting to dashboard...",{
+      toast.info("Redirecting to dashboard...", {
         style: { backgroundColor: "#2563EB", color: "white" },
       });
     } else {
       toast.warning("You need to be signed in to get started.", {
         description: "Redirecting to sign in page...",
         style: { backgroundColor: "#EAB308", color: "white" },
-        
       });
       localStorage.setItem("showSignInToast", "true");
     }
@@ -79,13 +78,27 @@ export default function Home() {
   return (
     <main className="flex-1 overflow-scroll p-2 lg:p-5 bg-gradient-to-bl from-white to-indigo-600 dark:bg-black dark:text-white">
       {/* <ThemeToggle /> */}
-      <div className="relative bg-white dark:bg-gray-900 py-24 sm:py-32 rounded-md drop-shadow-xl">
-      <div className="absolute top-0 right-0">
-        <ThemeToggle />
-      </div>
+      <div className="relative bg-white dark:bg-gray-900 py-20 sm:py-32 rounded-md drop-shadow-xl">
+        <div className="absolute top-0 right-0">
+          <ThemeToggle />
+        </div>
         <div className="flex flex-col justify-center items-center mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl sm:text-center">
-            <h2 className="text-lg font-semibold leading-7 text-indigo-600 dark:text-indigo-400">
+          <div className="mx-auto max-w-2xl text-center space-y-6 px-6 lg:px-8">
+            <p
+              role="alert"
+              className="inline-block bg-red-100 dark:bg-red-900 px-4 py-2 rounded-md text-red-700 dark:text-red-300 font-medium text-md"
+            >
+              <span className="mr-1">⚠️</span>
+              <strong>Demo Notice:</strong>{" "}
+              <span className="font-light">
+                This live demo is provided solely for testing and development
+                purposes. Functionality may be limited, unstable, or subject to
+                sudden service restrictions. Use at your own risk;
+                production-grade reliability is not guaranteed.
+              </span>
+            </p>
+
+            <h2 className="text-lg font-semibold leading-7 text-indigo-600 dark:text-indigo-400 mt-16">
               Your Interactive Document Companion
             </h2>
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
@@ -99,7 +112,7 @@ export default function Home() {
               </span>
               <br />
               <br /> Upload your document, and our chatbot will respond to your
-              questions, summarise content, and provide the answers you need. 
+              questions, summarise content, and provide the answers you need.
               Perfect for everyone,{" "}
               <span className="text-indigo-600 dark:text-indigo-400">
                 Paperly
@@ -122,6 +135,7 @@ export default function Home() {
               width={2432}
               height={1442}
               className="mb-[-0%] rounded-xl shadow-2xl ring-1 ring-gray-900/10"
+              priority
             />
             <div aria-hidden="true" className="relative">
               <div className="absolute bottom-0 -inset-x-32 bg-gradient-to-t from-white/95 dark:from-transparent pt-[6%]" />
