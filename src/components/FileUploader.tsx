@@ -81,7 +81,6 @@ const FileUploader = () => {
       } catch (error) {
         console.error("Upload error:", error);
       
-        // if limit error, show a special toast and bail
         if (error instanceof Error && error.message.includes("Upload limit reached")) {
           toast.error("Free plan file limit reached. Upgrade to upload more files.", {
             id: toastId,
@@ -95,7 +94,6 @@ const FileUploader = () => {
           return;
         }
       
-        // fallback for any other upload errors
         toast.error(`Failed to upload ${file.name}. Please try again.`, {
           id: toastId,
           style: { backgroundColor: "#DC2626", color: "white" },
@@ -168,12 +166,10 @@ const FileUploader = () => {
         </div>
       )}
 
-      {/* Show Status Icons After Upload is Complete */}
       {showStatus && (
         <div className="mt-10 flex flex-col justify-center items-center gap-5">
           {
-            // @ts-expect-error daily-ui bug
-            statusIcons[status!]
+            statusIcons[status as StatusText]
           }
           <p className="text-indigo-600 dark:text-indigo-400 animate-pulse">
             {status !== null ? status.toString() : ""}

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ChatOpenAI } from "@langchain/openai";
 import { PDFLoader } from  "@langchain/community/document_loaders/fs/pdf";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
@@ -10,11 +9,9 @@ import { createHistoryAwareRetriever} from "langchain/chains/history_aware_retri
 import { HumanMessage, AIMessage } from "@langchain/core/messages";
 import pineconeClient from "./pinecone";
 import { PineconeStore } from "@langchain/pinecone";
-import { PineconeConflictError } from "@pinecone-database/pinecone/dist/errors";
 import { Index, RecordMetadata } from "@pinecone-database/pinecone";
 import { adminDb } from "../../firebaseAdmin";
 import { auth } from "@clerk/nextjs/server";
-import { doc } from "firebase/firestore";
 
 const model = new ChatOpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -189,7 +186,7 @@ const generateLangchainCompletion = async (docId: string, question: string) => {
       "Answer the user's questions based on the below context:\n\n{context}",
     ],
 
-    ...chatHistory, // Insert the actual chat history here
+    ...chatHistory,
 
     ["user", "{input}"],
   ])
@@ -214,11 +211,9 @@ const reply = await conversationalRetrievalChain.invoke({
   input: question,
 })
 
-// Print the result to the console
 console.log(reply.answer)
 return reply.answer
   
 }
 
-// Export the model and the run function
 export { model, generateLangchainCompletion };
