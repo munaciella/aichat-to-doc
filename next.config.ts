@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   },
   typescript: {
     // TODO ⚠️ Temporarily ignoring TS build errors due to Next.js false positives with dynamic route params
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   images: {
     remotePatterns: [

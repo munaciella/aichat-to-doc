@@ -144,9 +144,7 @@ const Chat = ({ id }: { id: string }) => {
 
   return (
     <div className="flex flex-col h-full overflow-scroll bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-      {/* Chat contents */}
       <div className="flex-1 w-full p-4">
-        {/* chat messages... */}
 
         {loading ? (
           <div className="flex items-center justify-center">
