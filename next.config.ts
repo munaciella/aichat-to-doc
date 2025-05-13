@@ -6,7 +6,6 @@ const nextConfig: NextConfig = {
     return config;
   },
   typescript: {
-    // TODO ⚠️ Temporarily ignoring TS build errors due to Next.js false positives with dynamic route params
     ignoreBuildErrors: false,
   },
   images: {
