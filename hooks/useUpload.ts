@@ -4,10 +4,9 @@ import { useUser } from "@clerk/nextjs";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { db, storage } from "../firebase";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { storage } from "../firebase";
 import { generateEmbeddings } from "../actions/generateEmbeddings";
-import { collection, getDocs } from "firebase/firestore";
+import { saveUploadedFile } from "../actions/saveUploadedFile";
 
 export enum StatusText {
   UPLOADING = "Uploading file...",
@@ -40,13 +39,12 @@ const useUpload = () => {
   };
 
   const handleUpload = async (file: File) => {
-    if (!file || !user) return;
+    if (!file || !user) {
+      throw new Error("You must be signed in to upload a file.");
+    }
 
     const fileIdToUploadTo = uuidv4();
-    const storageRef = ref(
-      storage,
-      `users/${user.id}/files/${fileIdToUploadTo}`
-    );
+    const storageRef = ref(storage, `users/${user.id}/files/${fileIdToUploadTo}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     setProgress(0);
@@ -54,33 +52,31 @@ const useUpload = () => {
 
     let hasSimulated = false;
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const percent = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
+    uploadTask.on("state_changed", (snapshot) => {
+      const percent = Math.round(
+        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      );
 
-        // Only simulate progress if Firebase is skipping updates
-        if (!hasSimulated && percent === 0) {
-          simulateSmoothProgress(0, 100);
-          hasSimulated = true;
-        } else {
-          setProgress(percent);
-        }
-
-        console.log("Upload Progress:", percent);
-      },
-      (error) => {
-        console.error("Error uploading file: ", error);
+      if (!hasSimulated && percent === 0) {
+        simulateSmoothProgress(0, 100);
+        hasSimulated = true;
+      } else {
+        setProgress(percent);
       }
-    );
 
-    // Wait for upload to complete
-    await new Promise<void>((resolve) => {
-      uploadTask.on("state_changed", null, null, async () => {
-        resolve();
-      });
+      console.log("Upload Progress:", percent);
+    });
+
+    await new Promise<void>((resolve, reject) => {
+      uploadTask.on(
+        "state_changed",
+        null,
+        (error) => {
+          console.error("Error uploading file:", error);
+          reject(error);
+        },
+        () => resolve()
+      );
     });
 
     setProgress(null);
@@ -92,29 +88,18 @@ const useUpload = () => {
     await delay(900);
     setStatus(StatusText.SAVING);
 
-    // Enforce document limit dynamically (2 or 20)
-    const userDocSnap = await getDoc(doc(db, "users", user.id));
-    const isPro = userDocSnap.exists() && userDocSnap.data()?.hasActiveMembership === true;
-    const MAX_FILES = isPro ? 20 : 2;
-
-    const userFilesRef = collection(db, "users", user.id, "files");
-    const userFilesSnap = await getDocs(userFilesRef);
-
-    if (userFilesSnap.size >= MAX_FILES) {
-      throw new Error("Upload limit reached. Please upgrade to Pro.");
-    }
-
-    await setDoc(doc(db, "users", user.id, "files", fileIdToUploadTo), {
+    await saveUploadedFile({
+      fileId: fileIdToUploadTo,
       name: file.name,
       size: file.size,
       type: file.type,
-      downloadUrl: downloadUrl,
-      ref: uploadTask.snapshot.ref.fullPath,
-      createdAt: new Date(),
+      downloadUrl,
+      storageRef: uploadTask.snapshot.ref.fullPath,
     });
 
     await delay(1200);
     setStatus(StatusText.GENERATING);
+
     await generateEmbeddings(fileIdToUploadTo);
 
     await delay(1500);
