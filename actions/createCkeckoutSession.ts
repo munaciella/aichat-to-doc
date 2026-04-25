@@ -1,21 +1,21 @@
-"use server";
+'use server';
 
-import { UserDetails } from "@/app/dashboard/upgrade/page";
-import { auth } from "@clerk/nextjs/server";
-import { adminDb } from "../firebaseAdmin";
-import stripe from "@/lib/stripe";
-import getBaseUrl from "@/lib/getBaseUrl";
+import { UserDetails } from '@/app/dashboard/upgrade/page';
+import { auth } from '@clerk/nextjs/server';
+import { adminDb } from '../firebaseAdmin';
+import stripe from '@/lib/stripe';
+import getBaseUrl from '@/lib/getBaseUrl';
 
 export async function createCheckoutSession(userDetails: UserDetails) {
   const { userId } = await auth();
 
   if (!userId) {
-    throw new Error("User not authenticated");
+    throw new Error('User not authenticated');
   }
 
   let stripeCustomerId;
 
-  const user = await adminDb.collection("users").doc(userId).get();
+  const user = await adminDb.collection('users').doc(userId).get();
   stripeCustomerId = user.data()?.stripeCustomerId;
 
   if (!stripeCustomerId) {
@@ -27,7 +27,7 @@ export async function createCheckoutSession(userDetails: UserDetails) {
       },
     });
 
-    await adminDb.collection("users").doc(userId).set({
+    await adminDb.collection('users').doc(userId).set({
       stripeCustomerId: customer.id,
     });
 
@@ -35,14 +35,14 @@ export async function createCheckoutSession(userDetails: UserDetails) {
   }
 
   const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
+    payment_method_types: ['card'],
     line_items: [
       {
-        price: "price_1R7J3oBMl1fziMK56651VXC5",
+        price: process.env.STRIPE_PRICE_ID!,
         quantity: 1,
       },
     ],
-    mode: "subscription",
+    mode: 'subscription',
     customer: stripeCustomerId,
     success_url: `${getBaseUrl()}/dashboard?upgrade=true`,
     cancel_url: `${getBaseUrl()}/dashboard?upgrade=false`,
