@@ -44,6 +44,9 @@ export async function createCheckoutSession(userDetails: UserDetails) {
     ],
     mode: 'subscription',
     customer: stripeCustomerId,
+    discounts: process.env.STRIPE_TEST_COUPON_ID
+      ? [{ coupon: process.env.STRIPE_TEST_COUPON_ID }]
+      : undefined,
     success_url: `${getBaseUrl()}/dashboard?upgrade=true`,
     cancel_url: `${getBaseUrl()}/dashboard?upgrade=false`,
   });
