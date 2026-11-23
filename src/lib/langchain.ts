@@ -1,11 +1,11 @@
 import { ChatOpenAI } from "@langchain/openai";
-import { PDFLoader } from  "@langchain/community/document_loaders/fs/pdf";
+import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { OpenAIEmbeddings } from "@langchain/openai";
-import { createStuffDocumentsChain} from "langchain/chains/combine_documents";
+import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { createRetrievalChain } from "langchain/chains/retrieval";
-import { createHistoryAwareRetriever} from "langchain/chains/history_aware_retriever";
+import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
 import { HumanMessage, AIMessage } from "@langchain/core/messages";
 import pineconeClient from "./pinecone";
 import { PineconeStore } from "@langchain/pinecone";
@@ -15,10 +15,11 @@ import { auth } from "@clerk/nextjs/server";
 
 const model = new ChatOpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-  modelName: "gpt-3.5-turbo",
+  model: "gpt-4.1-mini",
+  temperature: 0,
 });
 
-export const indexName = 'papafam'
+export const indexName = "papafam";
 
 async function fetchMessagesFromDB(docId: string) {
   const { userId } = await auth();
@@ -30,24 +31,24 @@ async function fetchMessagesFromDB(docId: string) {
   console.log("--- Fetching chat history from Firebase database... ---");
   const LIMIT = 6;
   const chats = await adminDb
-  .collection("users")
-  .doc(userId)
-  .collection("files")
-  .doc(docId)
-  .collection("chat")
-  .orderBy("createdAt", "desc")
-  .limit(LIMIT)
-  .get();
+    .collection("users")
+    .doc(userId)
+    .collection("files")
+    .doc(docId)
+    .collection("chat")
+    .orderBy("createdAt", "desc")
+    .limit(LIMIT)
+    .get();
 
   const chatHistory = chats.docs.map((doc) =>
     doc.data().role === "human"
-  ? new HumanMessage(doc.data().message)
-  : new AIMessage(doc.data().message)
-  )
+      ? new HumanMessage(doc.data().message)
+      : new AIMessage(doc.data().message),
+  );
 
   console.log(
-    `--- fetched last ${chatHistory.length} messages successfully ---`
-  )
+    `--- fetched last ${chatHistory.length} messages successfully ---`,
+  );
   console.log(chatHistory.map((msg) => msg.content.toString()));
 
   return chatHistory;
@@ -62,11 +63,11 @@ export async function generateDocs(docId: string) {
 
   console.log("--- Fetching the download URL from Firebase... ---");
   const firebaseRef = await adminDb
-  .collection("users")
-  .doc(userId)
-  .collection("files")
-  .doc(docId)
-  .get();
+    .collection("users")
+    .doc(userId)
+    .collection("files")
+    .doc(docId)
+    .get();
 
   const downloadUrl = firebaseRef.data()?.downloadUrl;
   if (!downloadUrl) {
@@ -74,7 +75,7 @@ export async function generateDocs(docId: string) {
   }
   console.log(`--- Download URL fetched successfully: ${downloadUrl} ---`);
 
-  const response  = await fetch(downloadUrl);
+  const response = await fetch(downloadUrl);
 
   const data = await response.blob();
 
@@ -83,7 +84,7 @@ export async function generateDocs(docId: string) {
   const docs = await loader.load();
 
   console.log("--- Splitting document into smaller chunks... ---");
-  const splitter = new RecursiveCharacterTextSplitter()
+  const splitter = new RecursiveCharacterTextSplitter();
 
   const splitDocs = await splitter.splitDocuments(docs);
   console.log(`--- Split into ${splitDocs.length} parts ---`);
@@ -91,10 +92,13 @@ export async function generateDocs(docId: string) {
   return splitDocs;
 }
 
-async function namespaceExists(index: Index<RecordMetadata>, namespace: string) {
-    if (namespace === null) throw new Error("No namespace value provided");
-    const { namespaces} = await index.describeIndexStats();
-    return namespaces?.[namespace] !== undefined;
+async function namespaceExists(
+  index: Index<RecordMetadata>,
+  namespace: string,
+) {
+  if (namespace === null) throw new Error("No namespace value provided");
+  const { namespaces } = await index.describeIndexStats();
+  return namespaces?.[namespace] !== undefined;
 }
 
 export async function generateEmbeddingsInPineconeVectorStore(docId: string) {
@@ -110,10 +114,12 @@ export async function generateEmbeddingsInPineconeVectorStore(docId: string) {
   const embeddings = new OpenAIEmbeddings();
 
   const index = await pineconeClient.index(indexName);
-  const namespaceAlreadyExists = await namespaceExists(index, docId)
+  const namespaceAlreadyExists = await namespaceExists(index, docId);
 
   if (namespaceAlreadyExists) {
-    console.log(`--- Namespace ${docId} already exists, reusing existing embeddings... ---`);
+    console.log(
+      `--- Namespace ${docId} already exists, reusing existing embeddings... ---`,
+    );
 
     pineconeVectorStore = await PineconeStore.fromExistingIndex(embeddings, {
       pineconeIndex: index,
@@ -126,16 +132,16 @@ export async function generateEmbeddingsInPineconeVectorStore(docId: string) {
     const splitDocs = await generateDocs(docId);
 
     console.log(
-        `--- Storing the embeddings in namespace ${docId} in the ${indexName} Pinecone vector store... ---`
-    )
+      `--- Storing the embeddings in namespace ${docId} in the ${indexName} Pinecone vector store... ---`,
+    );
 
     pineconeVectorStore = await PineconeStore.fromDocuments(
-        splitDocs,
-        embeddings,
-        {
-          pineconeIndex: index,
-          namespace: docId,
-        }
+      splitDocs,
+      embeddings,
+      {
+        pineconeIndex: index,
+        namespace: docId,
+      },
     );
 
     return pineconeVectorStore;
@@ -168,7 +174,7 @@ const generateLangchainCompletion = async (docId: string, question: string) => {
       "user",
       "Given the above conversation, generate a search query to look up in order to get information relevant to the conversation",
     ],
-  ])
+  ]);
 
   // Create a history aware retriever chain that uses the model, the retriever, and the prompt template
   console.log("--- Creating a history aware retriever chain... ---");
@@ -176,10 +182,12 @@ const generateLangchainCompletion = async (docId: string, question: string) => {
     llm: model,
     retriever,
     rephrasePrompt: historyAwarePrompt,
-  })
+  });
 
   // Define a prompt template for answering questions based on retrieved context
-  console.log("--- Defining the prompt template for answering questions... ---");
+  console.log(
+    "--- Defining the prompt template for answering questions... ---",
+  );
   const historyAwareRetrievalPrompt = ChatPromptTemplate.fromMessages([
     [
       "system",
@@ -189,31 +197,30 @@ const generateLangchainCompletion = async (docId: string, question: string) => {
     ...chatHistory,
 
     ["user", "{input}"],
-  ])
+  ]);
 
   // Create a chain to combine the retrieved documents into a coherent answer
   console.log("--- Creating a document combining chain... ---");
   const historyAwareCombineDocsChain = await createStuffDocumentsChain({
     llm: model,
     prompt: historyAwareRetrievalPrompt,
-  })
+  });
 
   // Create the main retrieval chain that combines the history aware retriever chain and the document combining chains
   console.log("--- Creating the main retrieval chain... ---");
   const conversationalRetrievalChain = await createRetrievalChain({
     retriever: historyAwareRetrieverChain,
     combineDocsChain: historyAwareCombineDocsChain,
-})
+  });
 
-console.log("--- Running the chain with a sample conversation... ---");
-const reply = await conversationalRetrievalChain.invoke({
-  chat_history: chatHistory,
-  input: question,
-})
+  console.log("--- Running the chain with a sample conversation... ---");
+  const reply = await conversationalRetrievalChain.invoke({
+    chat_history: chatHistory,
+    input: question,
+  });
 
-console.log(reply.answer)
-return reply.answer
-  
-}
+  console.log(reply.answer);
+  return reply.answer;
+};
 
 export { model, generateLangchainCompletion };
